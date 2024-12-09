@@ -1,6 +1,9 @@
 import React from 'react'
-import projetMaitrise from '../assets/ReaserachPaper.webp' 
-import projetLicence from '../assets/projetLicence.webp'
+import projetMaitrise from '../assets/ReaserachPaper.webp' ; 
+import projetLicence from '../assets/projetLicence.webp' ; 
+import projectDatabase from '../assets/DatabaseProjectwebp.webp' ; 
+import projectCheapDish from '../assets/CheapDishProjectwebp.webp' ; 
+import projectGameTheory from '../assets/GameTheory.webp' ; 
 const Work = () => {
   return (
     <div className='max-w-[1200px] mx-auto p-5' id='work'>
@@ -14,7 +17,7 @@ const Work = () => {
         <div className='opacity-0 group-hover:opacity-90 bg-[gray]/70 absolute inset-0 flex flex-col justify-center items-center'>
           <a href="/">
             <button className='text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg'>
-              Direct
+            Détail
             </button>
           </a>
         </div>
@@ -24,7 +27,37 @@ const Work = () => {
         <div className='opacity-0 group-hover:opacity-90 bg-[gray]/70 absolute inset-0 flex flex-col justify-center items-center'>
           <a href="/">
             <button className='text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg'>
-              Direct
+            Détail
+            </button>
+          </a>
+        </div>
+      </div>
+      <div className='transform transition-transform duration-300 hover:scale-105 overflow-hidden shadow-lg shadow-[#040c16] group container rounded-md flex justify-center items-center mx-auto content-div h-[300px] md:h-[350px] lg:h-[400px] bg-cover relative'>
+        <img src={projectDatabase} alt="" layout="fill" objectFit="cover"/>
+        <div className='opacity-0 group-hover:opacity-90 bg-[gray]/70 absolute inset-0 flex flex-col justify-center items-center'>
+          <a href="/">
+            <button className='text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg'>
+            Détail
+            </button>
+          </a>
+        </div>
+      </div>
+      <div className='transform transition-transform duration-300 hover:scale-105 overflow-hidden shadow-lg shadow-[#040c16] group container rounded-md flex justify-center items-center mx-auto content-div h-[300px] md:h-[350px] lg:h-[400px] bg-cover relative'>
+        <img src={projectCheapDish} alt="" layout="fill" objectFit="cover"/>
+        <div className='opacity-0 group-hover:opacity-90 bg-[gray]/70 absolute inset-0 flex flex-col justify-center items-center'>
+          <a href="/">
+            <button className='text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg'>
+            Détail
+            </button>
+          </a>
+        </div>
+      </div>
+      <div className='transform transition-transform duration-300 hover:scale-105 overflow-hidden shadow-lg shadow-[#040c16] group container rounded-md flex justify-center items-center mx-auto content-div h-[300px] md:h-[350px] lg:h-[400px] bg-cover relative'>
+        <img src={projectGameTheory} alt="" layout="fill" objectFit="cover"/>
+        <div className='opacity-0 group-hover:opacity-90 bg-[gray]/70 absolute inset-0 flex flex-col justify-center items-center'>
+          <a href="/">
+            <button className='text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg'>
+            Détail
             </button>
           </a>
         </div>
