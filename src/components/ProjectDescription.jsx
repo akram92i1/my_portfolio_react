@@ -1,38 +1,55 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-
-// Import your existing TechnologyDescription component
+import { useParams } from 'react-router-dom';
 import TechnologyDescription from './TechnologyDescription';
 
-const ProjectDescription = ({ title, description, motivation, technologies, images }) => {
-  return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mb-10">
-      {/* Project Title */}
-      <h2 className="text-3xl font-bold mb-4 text-gray-800">{title}</h2>
+const ProjectDescription = ({ projects }) => {
+  const { id } = useParams();
+  const project = projects.find((proj) => proj.id === id);
 
+  if (!project) {
+    return <div className="text-center text-red-500 mt-10 animate-bounce">Project not found</div>;
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-white to-gray-100 shadow-2xl rounded-lg mb-10">
+      {/* Project Title */}
+      <h2 className="text-4xl font-extrabold mb-4 text-gray-900 animate-fade-in">
+        {project.title}
+      </h2>
+
+      <div className="border-t border-gray-300 my-6"></div>
+
+      {/* Project Description and Motivation */}
       <div className="mb-6">
-        <h3 className="text-2xl font-semibold mb-2 text-gray-700">Description & Motivation</h3>
-        <p className="text-gray-600">{description}</p>
-        <p className="mt-2 text-gray-600">{motivation}</p>
+        <h3 className="text-2xl font-semibold mb-3 text-blue-700">Description & Motivation</h3>
+        <p className="text-gray-700 leading-relaxed">{project.description}</p>
+        <p className="mt-3 text-gray-700 leading-relaxed">{project.motivation}</p>
       </div>
+
+      <div className="border-t border-gray-300 my-6"></div>
 
       {/* Technologies Used */}
       <div className="mb-6">
-        <h3 className="text-2xl font-semibold mb-2 text-gray-700">Technologies Used</h3>
-        <TechnologyDescription technologies={technologies} />
+        <h3 className="text-2xl font-semibold mb-3 text-blue-700">Technologies Used</h3>
+        <TechnologyDescription technologies={project.technologies} />
       </div>
 
+      <div className="border-t border-gray-300 my-6"></div>
+
       {/* Illustration / Results */}
-      {images && images.length > 0 && (
+      {project.images && project.images.length > 0 && (
         <div>
-          <h3 className="text-2xl font-semibold mb-4 text-gray-700">Illustrations / Results</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {images.map((imgSrc, index) => (
-              <div key={index} className="overflow-hidden rounded-lg shadow-md">
+          <h3 className="text-2xl font-semibold mb-4 text-blue-700">Illustrations / Results</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {project.images.map((imgSrc, index) => (
+              <div
+                key={index}
+                className="overflow-hidden rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500"
+              >
                 <img
                   src={imgSrc}
                   alt={`Project screenshot ${index + 1}`}
-                  className="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300"
+                  className="w-full h-48 object-cover"
                 />
               </div>
             ))}
@@ -41,18 +58,6 @@ const ProjectDescription = ({ title, description, motivation, technologies, imag
       )}
     </div>
   );
-};
-
-ProjectDescription.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  motivation: PropTypes.string.isRequired,
-  technologies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  images: PropTypes.arrayOf(PropTypes.string),
-};
-
-ProjectDescription.defaultProps = {
-  images: [],
 };
 
 export default ProjectDescription;
