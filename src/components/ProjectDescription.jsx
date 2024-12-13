@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import TechnologyDescription from './TechnologyDescription';
+import UAVPathAnimation from './UAVPathAnimation';
 
 const ProjectDescription = ({ projects }) => {
   const { id } = useParams();
@@ -40,7 +41,7 @@ const ProjectDescription = ({ projects }) => {
       {project.images && project.images.length > 0 && (
         <div>
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">Illustrations / Results</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             {project.images.map((imgSrc, index) => (
               <div
                 key={index}
@@ -53,6 +54,16 @@ const ProjectDescription = ({ projects }) => {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* UAV Path Animation */}
+      {project.hasUAVAnimation && (
+        <div className="mt-8">
+          <h3 className="text-2xl font-semibold mb-4 text-blue-700">UAV Path Animation</h3>
+          <div className="h-72 sm:h-96 bg-gray-100 rounded-lg shadow-md flex items-center justify-center">
+            <UAVPathAnimation />
           </div>
         </div>
       )}

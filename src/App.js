@@ -6,6 +6,7 @@ import Skills from './components/Skills';
 import About from './components/About';
 import Work from './components/Work';
 import ProjectDescription from './components/ProjectDescription';
+import UAVPathAnimation from './components/UAVPathAnimation';
 
 const projectList = [
   {
@@ -15,6 +16,7 @@ const projectList = [
     motivation: 'L\'objectif de ce travail est d\'améliorer l\'efficacité énergétique et temporelle des missions de collecte de données agricoles à l\'aide de drones, afin d\'optimiser les opérations sur le terrain.',
     technologies: ['Python', 'CVX', 'scikit-learn', 'MATLAB'],
     images: ['https://via.placeholder.com/400x300'],
+    hasUAVAnimation: true,
   },
   {
     id: 'project2',
@@ -23,6 +25,7 @@ const projectList = [
     motivation: 'Motivation pour le projet de licence.',
     technologies: ['HTML', 'CSS', 'JavaScript'],
     images: ['https://via.placeholder.com/400x300'],
+    hasUAVAnimation: false,
   },
   // Add other projects similarly
 ];
