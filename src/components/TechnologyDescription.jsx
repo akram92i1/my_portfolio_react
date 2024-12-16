@@ -7,7 +7,7 @@ const TechnologyDescription = ({ technologies }) => {
       {technologies.map((tech, index) => (
         <li
           key={index}
-          className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium"
+          className="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm font-medium"
         >
           {tech}
         </li>

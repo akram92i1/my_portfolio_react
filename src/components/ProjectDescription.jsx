@@ -50,7 +50,7 @@ const ProjectDescription = ({ projects }) => {
                 <img
                   src={imgSrc}
                   alt={`Project screenshot ${index + 1}`}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-50 object-cover"
                 />
               </div>
             ))}
@@ -59,14 +59,14 @@ const ProjectDescription = ({ projects }) => {
       )}
 
       {/* UAV Path Animation */}
-      {project.hasUAVAnimation && (
+      {/* {project.hasUAVAnimation && (
         <div className="mt-8">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">UAV Path Animation</h3>
           <div className="h-72 sm:h-96 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
               <UAVPathAnimation />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

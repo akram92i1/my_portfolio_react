@@ -15,7 +15,7 @@ const projectList = [
     description: 'Dans le cadre de l\'optimisation des opérations agricoles, cette étude propose des solutions concrètes de planification de trajectoires pour des drones à voilure tournante (UAV) utilisés dans la collecte de données pour l\'Internet des Objets (IoT). L’objectif est d\'optimiser les trajectoires des UAV en minimisant à la fois le temps de mission et la consommation d\'énergie, tout en respectant les contraintes de communication et les délais imposés. Deux approches heuristiques sont présentées : un algorithme de planification quasi-optimale et un algorithme basé sur l\'intelligence artificielle des colonies d\'abeilles (ABC).',
     motivation: 'L\'objectif de ce travail est d\'améliorer l\'efficacité énergétique et temporelle des missions de collecte de données agricoles à l\'aide de drones, afin d\'optimiser les opérations sur le terrain.',
     technologies: ['Python', 'CVX', 'scikit-learn', 'MATLAB'],
-    images: ['https://via.placeholder.com/400x300'],
+    images: ['/ResearchUAV.png' ,'/100CapteurObjTemp.jpg' ,'/20Mbits5,09.jpg' ],
     hasUAVAnimation: true,
   },
   {
