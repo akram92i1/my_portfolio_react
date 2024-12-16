@@ -1,48 +1,47 @@
-// src/components/UAVPathAnimation.jsx
 import React, { useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, Line, Grid } from '@react-three/drei';
-import { AxesHelper } from 'three';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { OrbitControls, Sphere, Line, Grid, Text, Plane } from '@react-three/drei';
+import { AxesHelper, Euler, TextureLoader , RepeatWrapping  } from 'three';
 
-// Placeholder sensor positions for different approaches
-const tspKmeansPath = [
-  [0, 0, 3],
-  [2, 1, 3],
-  [4, 2, 3],
-  [6, 0, 3],
-  [8, -1, 3],
-];
-
-const abcPath = [
-  [0, 0, 3],
-  [1, 2, 3],
-  [3, 1, 3],
-  [5, 0, 3],
-  [7, -2, 3],
-];
-
-const scaBasedPath = [
-  [0, 0, 3],
-  [2, 0, 3],
-  [4, 1, 3],
-  [6, -1, 3],
-  [8, 0, 3],
-];
-
-// Generate 20 random sensor positions with z = 0
+// Generate 20 random sensor positions within 10 x 10 area on the XY plane (Z = 0)
 const generateSensors = () => {
   const sensors = [];
   for (let i = 0; i < 20; i++) {
     sensors.push([
-      (Math.random() * 10) - 5, // Random x between -5 and 5
-      (Math.random() * 5) - 2.5, // Random y between -2.5 and 2.5
-      0, // z = 0
+      Math.random() * 10,  // Random X between 0 and 10
+      Math.random() * 10,  // Random Y between 0 and 10
+      0                    // Z = 0 (on the ground)
     ]);
   }
   return sensors;
 };
 
 const sensorPositions = generateSensors();
+
+// Placeholder UAV paths (all at altitude Z = 10)
+const tspKmeansPath = [
+  [1, 2, 10],
+  [3, 4, 10],
+  [5, 6, 10],
+  [7, 3, 10],
+  [4, 1, 10],
+];
+
+const abcPath = [
+  [1.5, 2.5, 10],
+  [3.5, 4.5, 10],
+  [5.5, 3.5, 10],
+  [6.5, 2, 10],
+  [4.5, 1.5, 10],
+];
+
+const scaBasedPath = [
+  [1.2, 2.2, 10],
+  [3.2, 4.2, 10],
+  [5.2, 6.2, 10],
+  [7.2, 3.2, 10],
+  [4.2, 1.2, 10],
+];
 
 // UAV component that follows the path
 const UAV = ({ path, color }) => {
@@ -55,7 +54,7 @@ const UAV = ({ path, color }) => {
       const target = path[currentPointIndex];
       uavRef.current.position.lerp(
         { x: target[0], y: target[1], z: target[2] },
-        speed
+        speed 
       );
 
       if (
@@ -71,28 +70,63 @@ const UAV = ({ path, color }) => {
   });
 
   return (
-    <Sphere ref={uavRef} args={[0.1, 16, 16]} position={path[0]}>
+    <Sphere ref={uavRef} args={[0.15, 16, 16]} position={path[0]}>
       <meshStandardMaterial color={color} />
     </Sphere>
   );
 };
 
-const UAVPathAnimation = () => {
+// Axis Labels Component for ZXY orientation
+const AxisLabels = () => {
   return (
-    <div className="w-full h-96 relative">
-      <Canvas camera={{ position: [10, 10, 10], fov: 50 }}>
+    <>
+      <Text position={[10.5, 0, 0]} fontSize={0.5} color="blue">
+        X
+      </Text>
+      <Text position={[0, 10.5, 0]} fontSize={0.5} color="green">
+        Y
+      </Text>
+      <Text position={[0, 0, 10.5]} fontSize={0.5} color="red">
+        Z
+      </Text>
+    </>
+  );
+};
+
+const UAVPathAnimation = () => {
+
+  const grassTexture  = useLoader(TextureLoader , '/grass.webp') ; 
+  // Repeat the texture for a larger terrain
+  grassTexture.wrapS = grassTexture.wrapT = RepeatWrapping;
+  grassTexture.repeat.set(4, 4);
+
+  return (
+    <div className="w-full h-screen relative">
+      <Canvas camera={{ position: [15, 15, 15], up: [0, 0, 1], fov: 100 }}>
+        {/* Lighting for better visualization */}
         <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <OrbitControls />
+        <directionalLight position={[10, 10, 10]} intensity={1.5} castShadow />
+        
+
+        <OrbitControls makeDefault />
+
+         {/* Ground Plane with Grass Texture */}
+         <Plane args={[12, 12]}  position={[5, 5, 0]} receiveShadow>
+            <meshStandardMaterial map={grassTexture} />
+          </Plane>
+
 
         {/* Add Grid and Axes */}
-        <Grid infiniteGrid rotation={[Math.PI / 2, 0, 0]} />
-        <primitive object={new AxesHelper(5)} />
+        <Grid infiniteGrid args={[10, 10]} rotation={[Math.PI / 2, 0, 0]} />
+        <primitive object={new AxesHelper(10)} rotation={new Euler(0, 0, Math.PI / 2)} />
+
+        {/* Render Axis Labels */}
+        <AxisLabels />
 
         {/* Render Sensors */}
         {sensorPositions.map((pos, index) => (
-          <Sphere key={index} args={[0.08, 16, 16]} position={pos}>
-            <meshStandardMaterial color="yellow" />
+          <Sphere key={index} args={[0.2, 16, 16]} position={pos} castShadow>
+            <meshStandardMaterial color="black" />
           </Sphere>
         ))}
 

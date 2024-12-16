@@ -62,8 +62,8 @@ const ProjectDescription = ({ projects }) => {
       {project.hasUAVAnimation && (
         <div className="mt-8">
           <h3 className="text-2xl font-semibold mb-4 text-blue-700">UAV Path Animation</h3>
-          <div className="h-72 sm:h-96 bg-gray-100 rounded-lg shadow-md flex items-center justify-center">
-            <UAVPathAnimation />
+          <div className="h-72 sm:h-96 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+              <UAVPathAnimation />
           </div>
         </div>
       )}
