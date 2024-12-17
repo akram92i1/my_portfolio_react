@@ -63,9 +63,6 @@ const ProjectDescription = ({ projects }) => {
 
 <div className="mb-6">
   <h3 className="text-2xl font-semibold mb-4 text-blue-700">Explication des Résultats</h3>
-  <p className="text-gray-700 leading-relaxed">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-  </p>
   <p className="mt-4 text-gray-700 leading-relaxed">
     {project.explication}
   </p>
