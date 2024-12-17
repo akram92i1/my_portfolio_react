@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/my_portfolio_react/static/css/main.5b608c96.css",
+    "main.js": "/my_portfolio_react/static/js/main.753bc274.js",
+    "static/js/453.acca0757.chunk.js": "/my_portfolio_react/static/js/453.acca0757.chunk.js",
+    "static/media/pikaso_image.jpg": "/my_portfolio_react/static/media/pikaso_image.877c3cee5ea8e18cd215.jpg",
+    "static/media/GameTheory.webp": "/my_portfolio_react/static/media/GameTheory.5ab432821ea846df74db.webp",
+    "static/media/CheapDishProjectwebp.webp": "/my_portfolio_react/static/media/CheapDishProjectwebp.95b9047223b4cdebfbfa.webp",
+    "static/media/DatabaseProjectwebp.webp": "/my_portfolio_react/static/media/DatabaseProjectwebp.61914a2832ac3f2ecc0d.webp",
+    "static/media/navbarlogo.png": "/my_portfolio_react/static/media/navbarlogo.eff6e31136edf909450f.png",
+    "static/media/Matlab.png": "/my_portfolio_react/static/media/Matlab.a5545e37b742b310f849.png",
+    "static/media/Cplus.png": "/my_portfolio_react/static/media/Cplus.827c2a418518abda588a.png",
+    "static/media/SQL.png": "/my_portfolio_react/static/media/SQL.8be893968864ba15d257.png",
+    "static/media/projetLicence.webp": "/my_portfolio_react/static/media/projetLicence.6c9fbf06a8fd4d5343af.webp",
+    "static/media/Ocaml.png": "/my_portfolio_react/static/media/Ocaml.042e26501174331acd44.png",
+    "static/media/ReaserachPaper.webp": "/my_portfolio_react/static/media/ReaserachPaper.8fdeee45cc98f13260ba.webp",
+    "static/media/Python.png": "/my_portfolio_react/static/media/Python.b1e6e6da3e2fbaf56d3b.png",
+    "static/media/java.png": "/my_portfolio_react/static/media/java.b6c3ce5b48a6076e87b2.png",
+    "static/media/Javascript.png": "/my_portfolio_react/static/media/Javascript.927ae688e45816c1c763.png",
+    "index.html": "/my_portfolio_react/index.html",
+    "main.5b608c96.css.map": "/my_portfolio_react/static/css/main.5b608c96.css.map",
+    "main.753bc274.js.map": "/my_portfolio_react/static/js/main.753bc274.js.map",
+    "453.acca0757.chunk.js.map": "/my_portfolio_react/static/js/453.acca0757.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5b608c96.css",
+    "static/js/main.753bc274.js"
+  ]
+}
