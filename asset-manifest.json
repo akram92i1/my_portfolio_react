@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/my_portfolio_react/static/css/main.5b608c96.css",
-    "main.js": "/my_portfolio_react/static/js/main.f7a0f84a.js",
+    "main.js": "/my_portfolio_react/static/js/main.d37103e7.js",
     "static/js/453.acca0757.chunk.js": "/my_portfolio_react/static/js/453.acca0757.chunk.js",
     "static/media/pikaso_image.jpg": "/my_portfolio_react/static/media/pikaso_image.877c3cee5ea8e18cd215.jpg",
     "static/media/GameTheory.webp": "/my_portfolio_react/static/media/GameTheory.5ab432821ea846df74db.webp",
@@ -20,11 +20,11 @@
     "static/media/grass.webp": "/my_portfolio_react/static/media/grass.a1f3e554690edf03a6fb.webp",
     "index.html": "/my_portfolio_react/index.html",
     "main.5b608c96.css.map": "/my_portfolio_react/static/css/main.5b608c96.css.map",
-    "main.f7a0f84a.js.map": "/my_portfolio_react/static/js/main.f7a0f84a.js.map",
+    "main.d37103e7.js.map": "/my_portfolio_react/static/js/main.d37103e7.js.map",
     "453.acca0757.chunk.js.map": "/my_portfolio_react/static/js/453.acca0757.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5b608c96.css",
-    "static/js/main.f7a0f84a.js"
+    "static/js/main.d37103e7.js"
   ]
 }
