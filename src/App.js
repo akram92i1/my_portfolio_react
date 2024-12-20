@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route ,HashRouter} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -41,7 +41,17 @@ const projectList = [
     description: 'Développement d’un logiciel pour le pilotage automatique d’un système de micro-gravure par laser.',
     motivation: 'Automatiser et optimiser le processus de micro-gravure par laser pour des motifs complexes tout en minimisant le temps et les ressources consommées.',
     technologies: ['C++', 'OpenGL', 'DXF'],
-    images: ['https://via.placeholder.com/400x300'],
+    images: [
+      `${process.env.PUBLIC_URL}/projetCDTA42.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser73.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser74.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser74-1.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser75.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser75-1.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser77.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser77-1.png`,
+      `${process.env.PUBLIC_URL}/ResulatProjetLaser.png`,
+    ],
     hasUAVAnimation: false,
     explication: "Ce projet a consisté à développer une application logicielle pour le pilotage automatique d'un système de micro-gravure par laser. L'application permet d'importer des fichiers DXF et d'extraire des entités géométriques telles que des lignes, des polygones et des courbes complexes. Grâce à des algorithmes d'optimisation comme le recuit simulé, le logiciel génère un trajet de micro-gravure optimisé en minimisant le temps de traitement et en réduisant les déplacements inutiles du laser. La validation expérimentale a confirmé la fiabilité du système en réalisant des motifs complexes sur des échantillons de verre, avec une réduction significative du temps de gravure."
   }
@@ -52,11 +62,11 @@ const projectList = [
 
 function App() {
   return (
-    <Router basename="/my_portfolio_react">
+    <Router>
       <Navbar />
       <Routes>
         <Route
-          path="/"
+          path="/my_portfolio_react"
           element={
             <>
               <Hero />

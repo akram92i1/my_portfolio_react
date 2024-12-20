@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, Sphere, Line, Grid, Text, Plane } from '@react-three/drei';
 import { AxesHelper, Euler, TextureLoader , RepeatWrapping  } from 'three';
-
+import grass from '../assets/grass.webp'
 // Generate 20 random sensor positions within 10 x 10 area on the XY plane (Z = 0)
 const generateSensors = () => {
   const sensors = [];
@@ -95,7 +95,7 @@ const AxisLabels = () => {
 
 const UAVPathAnimation = () => {
 
-  const grassTexture  = useLoader(TextureLoader , '/grass.webp') ; 
+  const grassTexture  = useLoader(TextureLoader , grass) ; 
   // Repeat the texture for a larger terrain
   grassTexture.wrapS = grassTexture.wrapT = RepeatWrapping;
   grassTexture.repeat.set(4, 4);

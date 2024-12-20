@@ -1,5 +1,5 @@
 import React from 'react'
-import akram from '../assets/pikaso_image.jpg'
+import akram from '../assets/DSC_5607.JPG'
 const About = () => {
   return (
     <div className='text-white max-w-[1200px] mx-auto' id='about'>
