@@ -6,6 +6,7 @@ import Skills from './components/Skills';
 import About from './components/About';
 import Work from './components/Work';
 import ProjectDescription from './components/ProjectDescription';
+import SequenceDiagram from './components/SequenceDiagram';
 
 const projectList = [
   {
@@ -38,18 +39,26 @@ const projectList = [
   {
     id: 'project2',
     title: 'Projet de Licence',
-    description: 'Développement d’un logiciel pour le pilotage automatique d’un système de micro-gravure par laser.',
+    description: `Ce projet a été réalisé au sein du Centre de Développement des Technologies Avancées (CDTA) d'Alger, dans le cadre du développement d’un système de micro-gravure par ablation laser (projet : DSMALIBCP/Division Milieux Ionisés et Laser). Cette initiative interdisciplinaire a nécessité des connaissances approfondies dans des domaines variés tels que la physique, l’optique, l’optoélectronique, la chimie, l’électronique, et l’informatique.
+
+L’équipe "Conception et Fabrication Assistées par Ordinateur" (CFAO) de la Division Productique et Robotique (DPR) a joué un rôle clé en contribuant au développement de la partie logicielle. Plus précisément, ce projet a porté sur l’élaboration et l’intégration d’un convertisseur de fichier DXF en coordonnées XY, synchronisées avec l’état du laser (On/Off), dans un logiciel d’application. Cette étape a également inclus une validation expérimentale pour garantir la fiabilité et la précision du système.`
+,
     motivation: 'Automatiser et optimiser le processus de micro-gravure par laser pour des motifs complexes tout en minimisant le temps et les ressources consommées.',
     technologies: ['C++', 'OpenGL', 'DXF'],
+    umlImages:[
+      `${process.env.PUBLIC_URL}/sequenceDiag1.png`
+
+    ],
     images: [
       `${process.env.PUBLIC_URL}/projetCDTA42.png`,
-      `${process.env.PUBLIC_URL}/ProjetLaser73.png`,
+      `${process.env.PUBLIC_URL}/projetCDTA44.png`,
       `${process.env.PUBLIC_URL}/ProjetLaser74.png`,
       `${process.env.PUBLIC_URL}/ProjetLaser74-1.png`,
       `${process.env.PUBLIC_URL}/ProjetLaser75.png`,
       `${process.env.PUBLIC_URL}/ProjetLaser75-1.png`,
       `${process.env.PUBLIC_URL}/ProjetLaser77.png`,
       `${process.env.PUBLIC_URL}/ProjetLaser77-1.png`,
+      `${process.env.PUBLIC_URL}/ProjetLaser73.png`,
       `${process.env.PUBLIC_URL}/ResulatProjetLaser.png`,
     ],
     hasUAVAnimation: false,

@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@projectstorm/react-diagrams": "^7.0.4",
     "@react-three/drei": "^9.120.4",
     "@react-three/fiber": "^8.17.10",
     "@testing-library/jest-dom": "^5.17.0",

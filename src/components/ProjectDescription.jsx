@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import TechnologyDescription from './TechnologyDescription';
 import UAVPathAnimation from './UAVPathAnimation';
@@ -6,21 +6,10 @@ import UAVPathAnimation from './UAVPathAnimation';
 const ProjectDescription = ({ projects }) => {
   const { id } = useParams();
   const project = projects.find((proj) => proj.id === id);
-  const [zoomedImg, setZoomedImg] = useState(null);
 
   if (!project) {
-    return <div className="text-center text-red-500 mt-10 animate-bounce">Project not found</div>;
+    return <div className="text-center text-red-500 mt-10 animate-bounce">Projet non trouvé</div>;
   }
-
-  // Function to handle image click
-  const handleImageClick = (imgSrc) => {
-    setZoomedImg(imgSrc);
-  };
-
-  // Function to close the zoomed image
-  const closeZoom = () => {
-    setZoomedImg(null);
-  };
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gradient-to-br from-white to-gray-100 shadow-2xl rounded-lg mb-10">
@@ -42,63 +31,32 @@ const ProjectDescription = ({ projects }) => {
 
       {/* Technologies Used */}
       <div className="mb-6">
-        <h3 className="text-2xl font-semibold mb-3 text-blue-700">Technologies Used</h3>
+        <h3 className="text-2xl font-semibold mb-3 text-blue-700">Technologies Utilisées</h3>
         <TechnologyDescription technologies={project.technologies} />
       </div>
 
       <div className="border-t border-gray-300 my-6"></div>
 
-      {/* Illustration / Results */}
-      {project.images && project.images.length > 0 && (
-        <div>
-          <h3 className="text-2xl font-semibold mb-4 text-blue-700">Illustrations / Results</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-            {project.images.map((imgSrc, index) => (
-              <div
-                key={index}
-                className="overflow-hidden rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-500 cursor-pointer"
-                onClick={() => handleImageClick(imgSrc)}
-              >
-                <img
-                  src={imgSrc}
-                  alt={`Project screenshot ${index + 1}`}
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-            ))}
-          </div>
+      {/* Explication Section */}
+      <div className="mt-6 bg-blue-50 p-6 rounded-lg shadow-md">
+        <h3 className="text-2xl font-semibold mb-4 text-blue-700">Explication</h3>
+        <div className="text-gray-800 leading-relaxed space-y-4">
+          {project.explication.split('\n').map((paragraph, index) => (
+            <p key={index} className="mb-4">
+              {paragraph}
+            </p>
+          ))}
         </div>
-      )}
-
-      {/* Zoomed Image Modal */}
-      {zoomedImg && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
-          onClick={closeZoom}
-        >
-          <img
-            src={zoomedImg}
-            alt="Zoomed"
-            className="max-w-full max-h-full rounded-lg shadow-2xl"
-          />
-          <button
-            className="absolute top-4 right-4 text-white text-3xl font-bold"
-            onClick={closeZoom}
-          >
-            &times;
-          </button>
-        </div>
-      )}
-
+      </div>
       {/* UAV Path Animation */}
-      {project.hasUAVAnimation && (
+      {/* {project.hasUAVAnimation && (
         <div className="mt-8">
-          <h3 className="text-2xl font-semibold mb-4 text-blue-700">UAV Path Animation</h3>
+          <h3 className="text-2xl font-semibold mb-4 text-blue-700">Animation de la Trajectoire du Drone</h3>
           <div className="h-72 sm:h-96 bg-gray-100 rounded-lg shadow-md flex items-center justify-center overflow-hidden">
             <UAVPathAnimation />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
