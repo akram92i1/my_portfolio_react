@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/my_portfolio_react/static/css/main.fcae0d84.css",
-    "main.js": "/my_portfolio_react/static/js/main.5d982f92.js",
-    "static/js/453.acca0757.chunk.js": "/my_portfolio_react/static/js/453.acca0757.chunk.js",
+    "main.css": "/my_portfolio_react/static/css/main.2fbb628c.css",
+    "main.js": "/my_portfolio_react/static/js/main.6547f041.js",
+    "static/js/453.41811d64.chunk.js": "/my_portfolio_react/static/js/453.41811d64.chunk.js",
     "static/media/DSC_5607.JPG": "/my_portfolio_react/static/media/DSC_5607.cbeb79a878bfd6bea339.JPG",
     "static/media/GameTheory.webp": "/my_portfolio_react/static/media/GameTheory.5ab432821ea846df74db.webp",
     "static/media/CheapDishProjectwebp.webp": "/my_portfolio_react/static/media/CheapDishProjectwebp.95b9047223b4cdebfbfa.webp",
@@ -19,12 +19,12 @@
     "static/media/Javascript.png": "/my_portfolio_react/static/media/Javascript.927ae688e45816c1c763.png",
     "static/media/grass.webp": "/my_portfolio_react/static/media/grass.a1f3e554690edf03a6fb.webp",
     "index.html": "/my_portfolio_react/index.html",
-    "main.fcae0d84.css.map": "/my_portfolio_react/static/css/main.fcae0d84.css.map",
-    "main.5d982f92.js.map": "/my_portfolio_react/static/js/main.5d982f92.js.map",
-    "453.acca0757.chunk.js.map": "/my_portfolio_react/static/js/453.acca0757.chunk.js.map"
+    "main.2fbb628c.css.map": "/my_portfolio_react/static/css/main.2fbb628c.css.map",
+    "main.6547f041.js.map": "/my_portfolio_react/static/js/main.6547f041.js.map",
+    "453.41811d64.chunk.js.map": "/my_portfolio_react/static/js/453.41811d64.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fcae0d84.css",
-    "static/js/main.5d982f92.js"
+    "static/css/main.2fbb628c.css",
+    "static/js/main.6547f041.js"
   ]
 }
