@@ -7,6 +7,7 @@ import About from './components/About';
 import Work from './components/Work';
 import ProjectDescription from './components/ProjectDescription';
 import SequenceDiagram from './components/SequenceDiagram';
+import Timeline from './components/Timeline';
 
 const projectList = [
   {
@@ -63,6 +64,38 @@ L’équipe "Conception et Fabrication Assistées par Ordinateur" (CFAO) de la D
     ],
     hasUAVAnimation: false,
     explication: "Ce projet a consisté à développer une application logicielle pour le pilotage automatique d'un système de micro-gravure par laser. L'application permet d'importer des fichiers DXF et d'extraire des entités géométriques telles que des lignes, des polygones et des courbes complexes. Grâce à des algorithmes d'optimisation comme le recuit simulé, le logiciel génère un trajet de micro-gravure optimisé en minimisant le temps de traitement et en réduisant les déplacements inutiles du laser. La validation expérimentale a confirmé la fiabilité du système en réalisant des motifs complexes sur des échantillons de verre, avec une réduction significative du temps de gravure."
+  },
+
+  {
+    id: 'project5',
+    title: 'Simulation Basée sur la Théorie des Jeux pour les Réseaux de Capteurs Sans Fil',
+    description: `Ce projet vise à reproduire une simulation issue de l'article "Game Theoretic Approach Towards Energy-efficient Task Distribution in Wireless Sensor Networks". L'objectif principal est de démontrer que l'application de la théorie des jeux permet de réduire la consommation d'énergie des clusters heads. La simulation explore l'utilisation de Sensomax, un middleware, pour répartir stratégiquement les tâches et atteindre l'équilibre de Nash.`,
+    motivation: 'Appliquer des stratégies basées sur la théorie des jeux pour optimiser la répartition des tâches et réduire la consommation énergétique dans les réseaux de capteurs sans fil.',
+    technologies: ['Python', 'Sensomax Middleware'],
+    images: [
+      `${process.env.PUBLIC_URL}/diagrammeClasses.png`,
+      `${process.env.PUBLIC_URL}/fictitiousPlay.png`,
+      `${process.env.PUBLIC_URL}/simulationResult.png`
+    ],
+    explication: `
+      🔍 **Résumé du Projet**
+
+      Ce projet s'inscrit dans le cadre d'une étude approfondie de la répartition des tâches dans les réseaux de capteurs à l'aide de la théorie des jeux. L'utilisation de Sensomax facilite l'agrégation des données et la distribution des tâches en regroupant les capteurs par régions logiques.
+
+      ⚙️ **Méthodologie**
+
+      - Application de l'algorithme Fictitious Play pour calculer les stratégies optimales.
+      - Reproduction des scénarios et des gains énergétiques conformément aux stratégies définies (C,c représentant l'équilibre de Nash).
+      - Simulation de scénarios avec et sans application de la théorie des jeux pour comparer les résultats énergétiques.
+
+      📊 **Résultats**
+
+      Les simulations démontrent une réduction significative de la consommation d'énergie grâce à l'application de la théorie des jeux. Les graphiques montrent que la stratégie dominante (C,c) assure une convergence vers des solutions énergétiquement optimales pour les clusters.
+
+      🔎 **Critiques**
+
+      Le projet manque de détails sur certains aspects techniques, notamment le pseudo-code de l'algorithme. Cependant, il illustre efficacement l'impact positif de la théorie des jeux dans la gestion des ressources des réseaux de capteurs.
+    `,
   }
   
   // Add other projects similarly

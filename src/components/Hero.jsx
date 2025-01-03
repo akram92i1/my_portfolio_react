@@ -15,10 +15,11 @@ const Hero = () => {
         <br />  
         <TypeAnimation 
             sequence={[
-                "concepteur et développeur d'application pour des problèmes d'optimisation",
+                "développeur d'application pour des problèmes d'optimisation",
                 1000,
                 "développeur fullstack d'applications web",
                 1000,
+                "Ingénieur DevOps "
             ]}
             wrapper="span"
             speed={50}
@@ -26,7 +27,8 @@ const Hero = () => {
         />
     </h1>
     <p className='text-white sm:text-lg my-6  lg:text-xl'>
-    Je m'appelle Akram KHELILI, diplômé d'une maîtrise en informatique à l'UQAM et d'un master en technologies de l'information. Avec deux ans d'expérience en développement d'applications web, je me spécialise dans la conception de solutions web innovantes pour résoudre des problèmes complexes d'optimisation et de recherche. Passionné par les approches intelligentes, j'aime appliquer des méthodes heuristiques et d'apprentissage par renforcement pour développer des solutions efficaces et adaptées aux problématiques du monde réel.
+    {/* Je m'appelle Akram KHELILI, diplômé d'une maîtrise en informatique à l'UQAM et d'un master en technologies de l'information. Avec deux ans d'expérience en développement d'applications web, je me spécialise dans la conception de solutions web innovantes pour résoudre des problèmes complexes d'optimisation et de recherche. Passionné par les approches intelligentes, j'aime appliquer des méthodes heuristiques et d'apprentissage par renforcement pour développer des solutions efficaces et adaptées aux problématiques du monde réel. */}
+    Je m'appelle Akram KHELILI, diplômé d'une maîtrise en informatique à l'UQAM et d'un master en technologies de l'information. Avec deux ans d'expérience en développement web et deux ans comme chercheur à plein temps, je me spécialise dans la conception de solutions innovantes en combinant expertise technique et réflexion analytique. Passionné par les approches intelligentes comme l'apprentissage par renforcement et les méthodes heuristiques, j'aime relever des défis complexes et créer des solutions adaptées aux problématiques concrètes, que ce soit dans le développement ou l'optimisation des systèmes.
     </p>
     <div className='my-8'>
         <a href="/" className='px-6 py-3 w-full rounded-xl mr-4  bg-gradient-to-br from-orange-500 to-pink-500 text-white'>

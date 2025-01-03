@@ -10,8 +10,8 @@ const TechnologyDescription = ({ technologies }) => {
           className="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm font-medium"
         >
           {tech}
-        </li>
-      ))}
+          </li>
+        ))}
     </ul>
   );
 };
