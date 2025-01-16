@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import projetMaitrise from '../assets/ReaserachPaper.webp';
-import projetLicence from '../assets/projetLicence.webp';
-import projectDatabase from '../assets/DatabaseProjectwebp.webp';
-import projectCheapDish from '../assets/CheapDishProjectwebp.webp';
-import projectGameTheory from '../assets/GameTheory.webp';
+import projetMaitrise from '../assets/drone.jpg';
+import projetLicence from '../assets/projetLicence.jpg';
+import projectDatabase from '../assets/DatabaseProjectwebp.jpg';
+import projectCheapDish from '../assets/CheapDishProjectwebp.jpg';
+import projectGameTheory from '../assets/GameTheory.jpg';
 
 const projects = [
-  { id: 'project1', imgSrc: projetMaitrise, title: 'Projet de Maîtriswe' },
+  { id: 'project1', imgSrc: projetMaitrise, title: 'Projet de Maîtrise' },
   { id: 'project2', imgSrc: projetLicence, title: 'Projet de Licence' },
   { id: 'project3', imgSrc: projectDatabase, title: 'Projet de Base de Données' },
   { id: 'project4', imgSrc: projectCheapDish, title: 'Projet Cheap Dish' },
@@ -16,21 +16,26 @@ const projects = [
 
 const Work = () => {
   return (
-    <div className='max-w-[1200px] mx-auto p-5' id='work'>
-      <div className='pb-8 text-left'>
-        <p className='text-4xl mb-3 font-bold primary-color'>Mes travaux</p>
-        <p className='text-gray-400'>Explorez mes récents projets</p>
-      </div>
-      <div className='grid sm:grid-cols-2 md:grid-cols-3 gap-4'>
+    <section className="max-w-[1200px] mx-auto p-5" id="work">
+      <header className="pb-8">
+        <h2 className="text-4xl mb-3 font-bold primary-color">Mes travaux</h2>
+        <p className="text-gray-500">Explorez mes récents projets et leurs détails.</p>
+      </header>
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
         {projects.map((project) => (
           <div
             key={project.id}
-            className='transform transition-transform duration-300 hover:scale-105 overflow-hidden shadow-lg shadow-[#040c16] group container rounded-md flex justify-center items-center mx-auto content-div h-[300px] md:h-[350px] lg:h-[400px] bg-cover relative'
+            className="relative group transform transition-transform duration-300 hover:scale-105 rounded-lg overflow-hidden shadow-lg"
           >
-            <img src={project.imgSrc} alt={project.title} className="w-full h-full object-cover" />
-            <div className='opacity-0 group-hover:opacity-90 bg-[gray]/70 absolute inset-0 flex flex-col justify-center items-center'>
+            <img
+              src={project.imgSrc}
+              alt={`Image illustrant ${project.title}`}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gray-900 bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center">
+              <h3 className="text-white text-lg font-semibold mb-3">{project.title}</h3>
               <Link to={`/project-details/${project.id}`}>
-                <button className='text-center rounded-lg px-4 py-3 m-2 bg-white text-gray-700 font-bold text-lg'>
+                <button className="bg-white text-gray-800 rounded-lg px-5 py-2 font-medium hover:bg-gray-200 focus:ring-2 focus:ring-primary focus:outline-none">
                   Détail
                 </button>
               </Link>
@@ -38,7 +43,7 @@ const Work = () => {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -8,6 +8,10 @@ import Work from './components/Work';
 import ProjectDescription from './components/ProjectDescription';
 import SequenceDiagram from './components/SequenceDiagram';
 import Timeline from './components/Timeline';
+import ApiCallComponent from './components/ApiCallComponent'; 
+import WaifuPicsComponent from './components/WaifuPicsComponent ';
+import TheNewsAPIComponent from './components/TheNewsAPIComponent ';
+import SchedulerComponent from './components/SchedulerComponent';
 
 const projectList = [
   {
@@ -114,6 +118,8 @@ function App() {
               <Hero />
               <Skills />
               <About />
+              <SchedulerComponent />
+              <TheNewsAPIComponent />
               <Work />
             </>
           }
