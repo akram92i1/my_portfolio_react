@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Bar } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { PlusIcon, ClockIcon, ExclamationCircleIcon, ChartBarIcon } from "@heroicons/react/outline";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SchedulerComponent = () => {
   const [tasks, setTasks] = useState([]);
@@ -37,54 +42,87 @@ const SchedulerComponent = () => {
     }
   };
 
+  const graphData = {
+    labels: schedule.map((s) => `Task ${s.task_id}`),
+    datasets: [
+      {
+        label: "Task Duration",
+        data: schedule.map((s) => s.end_time - s.start_time),
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const graphOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: true, position: "top" },
+      title: { display: true, text: "Optimized Task Schedule" },
+    },
+  };
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold text-center mb-4">
-        Task Scheduling Optimizer
-      </h1>
-      <div className="mb-4">
-        <label className="block text-lg font-medium mb-2">
+    <div className="p-6 bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen">
+      {/* Title */}
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-gray-800 shadow-md p-4 bg-white rounded-lg flex justify-center items-center">
+          <ChartBarIcon className="h-8 w-8 text-green-600 mr-2" />
+          Task Scheduling Optimizer
+        </h1>
+      </header>
+
+      {/* Maximum Time Input */}
+      <div className="mb-6">
+        <label className="block text-lg font-semibold mb-2 text-gray-700">
+          <ClockIcon className="h-5 w-5 inline-block text-blue-500 mr-2" />
           Maximum Time (hours)
         </label>
         <input
           type="number"
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-3 border border-gray-300 rounded-lg shadow focus:ring focus:ring-blue-300"
           value={maxTime}
           onChange={(e) => setMaxTime(e.target.value)}
           placeholder="Enter maximum time"
         />
       </div>
-      <div className="mb-4">
-        <h2 className="text-xl font-medium mb-2">Tasks</h2>
+
+      {/* Task List */}
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
+          <PlusIcon className="h-6 w-6 text-green-500 mr-2" />
+          Tasks
+        </h2>
         {tasks.map((task, index) => (
           <div
             key={index}
-            className="p-4 mb-2 bg-white shadow rounded-md flex gap-4"
+            className="p-4 mb-4 bg-white shadow-lg rounded-lg flex gap-4 animate-fade-in"
           >
             <input
               type="text"
-              className="p-2 border border-gray-300 rounded-md w-1/3"
+              className="p-2 border border-gray-300 rounded-lg w-1/3 focus:ring focus:ring-blue-300"
               placeholder="Task Name"
               value={task.name}
               onChange={(e) => updateTask(index, "name", e.target.value)}
             />
             <input
               type="number"
-              className="p-2 border border-gray-300 rounded-md w-1/5"
+              className="p-2 border border-gray-300 rounded-lg w-1/5 focus:ring focus:ring-blue-300"
               placeholder="Priority"
               value={task.priority}
               onChange={(e) => updateTask(index, "priority", e.target.value)}
             />
             <input
               type="number"
-              className="p-2 border border-gray-300 rounded-md w-1/5"
+              className="p-2 border border-gray-300 rounded-lg w-1/5 focus:ring focus:ring-blue-300"
               placeholder="Duration"
               value={task.duration}
               onChange={(e) => updateTask(index, "duration", e.target.value)}
             />
             <input
               type="number"
-              className="p-2 border border-gray-300 rounded-md w-1/5"
+              className="p-2 border border-gray-300 rounded-lg w-1/5 focus:ring focus:ring-blue-300"
               placeholder="Deadline"
               value={task.deadline}
               onChange={(e) => updateTask(index, "deadline", e.target.value)}
@@ -93,41 +131,42 @@ const SchedulerComponent = () => {
         ))}
         <button
           onClick={addTask}
-          className="mt-2 p-2 bg-blue-500 text-white rounded-md"
+          className="mt-2 p-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition flex items-center"
         >
+          <PlusIcon className="h-5 w-5 mr-2" />
           Add Task
         </button>
       </div>
+
+      {/* Optimize Button */}
       <button
         onClick={fetchSchedule}
-        className="w-full p-2 bg-green-500 text-white font-bold rounded-md"
+        className="w-full p-4 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 transition mb-6 flex justify-center items-center"
       >
+        <ChartBarIcon className="h-6 w-6 mr-2" />
         Optimize Schedule
       </button>
+
+      {/* Error Message */}
       {error && (
-        <div className="mt-4 text-red-500 font-bold">
-          Error: {error}
+        <div className="mt-4 text-red-600 font-bold bg-red-100 p-3 rounded-lg shadow-md flex items-center">
+          <ExclamationCircleIcon className="h-6 w-6 mr-2" />
+          {error}
         </div>
       )}
+
+      {/* Graph */}
       {schedule.length > 0 && (
-        <div className="mt-6">
-          <h2 className="text-xl font-medium mb-2">Optimized Schedule</h2>
-          <div className="space-y-2">
-            {schedule.map((s, index) => (
-              <div
-                key={index}
-                className="p-4 bg-white shadow rounded-md flex justify-between"
-              >
-                <span>Task ID: {s.task_id}</span>
-                <span>
-                  Time: {s.start_time} - {s.end_time}
-                </span>
-              </div>
-            ))}
-          </div>
+        <div className="mt-8">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
+            <ChartBarIcon className="h-6 w-6 text-green-500 mr-2" />
+            Optimized Schedule
+          </h2>
+          <Bar data={graphData} options={graphOptions} />
         </div>
       )}
     </div>
   );
 };
+
 export default SchedulerComponent;
