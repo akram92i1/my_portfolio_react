@@ -42,6 +42,14 @@ const SchedulerComponent = () => {
     }
   };
 
+  const handleBarClick = (elements) => {
+    if (elements.length > 0) {
+      const clickedIndex = elements[0].index;
+      const clickedTask = schedule[clickedIndex];
+      alert(`Task ${clickedTask.task_id} Duration: ${clickedTask.end_time - clickedTask.start_time} hours`);
+    }
+  };
+
   const graphData = {
     labels: schedule.map((s) => `Task ${s.task_id}`),
     datasets: [
@@ -60,12 +68,20 @@ const SchedulerComponent = () => {
     plugins: {
       legend: { display: true, position: "top" },
       title: { display: true, text: "Optimized Task Schedule" },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => {
+            const task = schedule[tooltipItem.dataIndex];
+            return `Task ${task.task_id}: ${tooltipItem.raw} hours`;
+          },
+        },
+      },
     },
+    onClick: (e, elements) => handleBarClick(elements),
   };
 
   return (
     <div className="p-6 bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen">
-      {/* Title */}
       <header className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 shadow-md p-4 bg-white rounded-lg flex justify-center items-center">
           <ChartBarIcon className="h-8 w-8 text-green-600 mr-2" />
@@ -73,7 +89,6 @@ const SchedulerComponent = () => {
         </h1>
       </header>
 
-      {/* Maximum Time Input */}
       <div className="mb-6">
         <label className="block text-lg font-semibold mb-2 text-gray-700">
           <ClockIcon className="h-5 w-5 inline-block text-blue-500 mr-2" />
@@ -88,7 +103,6 @@ const SchedulerComponent = () => {
         />
       </div>
 
-      {/* Task List */}
       <div className="mb-6">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
           <PlusIcon className="h-6 w-6 text-green-500 mr-2" />
@@ -138,7 +152,6 @@ const SchedulerComponent = () => {
         </button>
       </div>
 
-      {/* Optimize Button */}
       <button
         onClick={fetchSchedule}
         className="w-full p-4 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 transition mb-6 flex justify-center items-center"
@@ -147,7 +160,6 @@ const SchedulerComponent = () => {
         Optimize Schedule
       </button>
 
-      {/* Error Message */}
       {error && (
         <div className="mt-4 text-red-600 font-bold bg-red-100 p-3 rounded-lg shadow-md flex items-center">
           <ExclamationCircleIcon className="h-6 w-6 mr-2" />
@@ -155,7 +167,6 @@ const SchedulerComponent = () => {
         </div>
       )}
 
-      {/* Graph */}
       {schedule.length > 0 && (
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
