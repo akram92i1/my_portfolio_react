@@ -25,7 +25,7 @@ const SchedulerComponent = () => {
     try {
       setError("");
       const response = await axios.post(
-        "https://testdeploymentvercel-n53x4shzm-cactus1549s-projects.vercel.app/schedule",
+        "https://python-api-three-weld.vercel.app/schedule",
         {
           tasks,
           max_time: parseInt(maxTime),

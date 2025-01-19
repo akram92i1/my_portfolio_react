@@ -32,13 +32,6 @@ const About = () => {
       description: "Encadrement pratique des étudiants en programmation (Java, Matlab) et administration Linux, animation d’ateliers sur Git en contexte agile, et correction des examens pratiques."
     },
     {
-      title: "Représentant des ventes",
-      institution: "Le choix du président",
-      date: "Octobre 2022 – Mars 2023",
-      location: "Montréal, QC, Canada",
-      description: "Communication et vente des services de l’épicerie Choix du Président."
-    },
-    {
       title: "Développeur full stack",
       institution: "École Nationale Polytechnique d’Alger",
       date: "Février 2020 – Octobre 2020",
