@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import ReactFlow, { Controls, Background } from "react-flow-renderer";
 import { PlusIcon, ClockIcon, ExclamationCircleIcon, ChartBarIcon } from "@heroicons/react/outline";
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SchedulerComponent = () => {
   const [tasks, setTasks] = useState([]);
@@ -42,42 +39,22 @@ const SchedulerComponent = () => {
     }
   };
 
-  const handleBarClick = (elements) => {
-    if (elements.length > 0) {
-      const clickedIndex = elements[0].index;
-      const clickedTask = schedule[clickedIndex];
-      alert(`Task ${clickedTask.task_id} Duration: ${clickedTask.end_time - clickedTask.start_time} hours`);
-    }
-  };
+  const generateGraphElements = () => {
+    const nodes = schedule.map((task, index) => ({
+      id: `task-${task.task_id}`,
+      data: { label: `Task ${task.task_id}` },
+      position: { x: index * 150, y: 50 },
+    }));
 
-  const graphData = {
-    labels: schedule.map((s) => `Task ${s.task_id}`),
-    datasets: [
-      {
-        label: "Task Duration",
-        data: schedule.map((s) => s.end_time - s.start_time),
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-      },
-    ],
-  };
+    const edges = schedule.slice(1).map((task, index) => ({
+      id: `edge-${index}`,
+      source: `task-${schedule[index].task_id}`,
+      target: `task-${task.task_id}`,
+      animated: true,
+      label: `Duration: ${task.end_time - task.start_time}h`,
+    }));
 
-  const graphOptions = {
-    responsive: true,
-    plugins: {
-      legend: { display: true, position: "top" },
-      title: { display: true, text: "Optimized Task Schedule" },
-      tooltip: {
-        callbacks: {
-          label: (tooltipItem) => {
-            const task = schedule[tooltipItem.dataIndex];
-            return `Task ${task.task_id}: ${tooltipItem.raw} hours`;
-          },
-        },
-      },
-    },
-    onClick: (e, elements) => handleBarClick(elements),
+    return [...nodes, ...edges];
   };
 
   return (
@@ -171,9 +148,14 @@ const SchedulerComponent = () => {
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
             <ChartBarIcon className="h-6 w-6 text-green-500 mr-2" />
-            Optimized Schedule
+            Optimized Schedule as Graph
           </h2>
-          <Bar data={graphData} options={graphOptions} />
+          <div style={{ width: "100%", height: "500px" }} className="bg-white shadow-lg rounded-lg">
+            <ReactFlow elements={generateGraphElements()} fitView>
+              <Background />
+              <Controls />
+            </ReactFlow>
+          </div>
         </div>
       )}
     </div>
