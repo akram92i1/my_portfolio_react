@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import axios from "axios";
-import ReactFlow, { Controls, Background } from "react-flow-renderer";
-import { PlusIcon, ClockIcon, ExclamationCircleIcon, ChartBarIcon } from "@heroicons/react/outline";
+import {
+  ReactFlow,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  Background,
+  ReactFlowProvider,
+  useStoreApi,
+  useReactFlow,
+} from "reactflow";
+import { PlusIcon, ClockIcon, ChartBarIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
+
+import 'reactflow/dist/style.css';
+
+const MIN_DISTANCE = 150;
 
 const SchedulerComponent = () => {
   const [tasks, setTasks] = useState([]);
   const [maxTime, setMaxTime] = useState("");
   const [schedule, setSchedule] = useState([]);
   const [error, setError] = useState("");
+
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const store = useStoreApi();
+  const { getInternalNode } = useReactFlow();
 
   const addTask = () => {
     setTasks([
@@ -34,28 +53,122 @@ const SchedulerComponent = () => {
         }
       );
       setSchedule(response.data);
+      createGraph(response.data);
     } catch (err) {
       setError(err.response?.data?.detail || "An error occurred.");
     }
   };
 
-  const generateGraphElements = () => {
-    const nodes = schedule.map((task, index) => ({
+  const createGraph = (scheduleData) => {
+    const newNodes = scheduleData.map((task, index) => ({
       id: `task-${task.task_id}`,
       data: { label: `Task ${task.task_id}` },
-      position: { x: index * 150, y: 50 },
+      position: { x: index * 150, y: 100 },
     }));
 
-    const edges = schedule.slice(1).map((task, index) => ({
+    const newEdges = scheduleData.slice(1).map((task, index) => ({
       id: `edge-${index}`,
-      source: `task-${schedule[index].task_id}`,
+      source: `task-${scheduleData[index].task_id}`,
       target: `task-${task.task_id}`,
-      animated: true,
       label: `Duration: ${task.end_time - task.start_time}h`,
     }));
 
-    return [...nodes, ...edges];
+    setNodes(newNodes);
+    setEdges(newEdges);
   };
+
+  const getClosestEdge = useCallback((node) => {
+    const { nodeLookup } = store.getState();
+    const internalNode = getInternalNode(node.id);
+
+    const closestNode = Array.from(nodeLookup.values()).reduce(
+      (res, n) => {
+        if (n.id !== internalNode.id) {
+          const dx =
+            n.internals.positionAbsolute.x -
+            internalNode.internals.positionAbsolute.x;
+          const dy =
+            n.internals.positionAbsolute.y -
+            internalNode.internals.positionAbsolute.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+
+          if (d < res.distance && d < MIN_DISTANCE) {
+            res.distance = d;
+            res.node = n;
+          }
+        }
+
+        return res;
+      },
+      {
+        distance: Number.MAX_VALUE,
+        node: null,
+      }
+    );
+
+    if (!closestNode.node) {
+      return null;
+    }
+
+    const closeNodeIsSource =
+      closestNode.node.internals.positionAbsolute.x <
+      internalNode.internals.positionAbsolute.x;
+
+    return {
+      id: closeNodeIsSource
+        ? `${closestNode.node.id}-${node.id}`
+        : `${node.id}-${closestNode.node.id}`,
+      source: closeNodeIsSource ? closestNode.node.id : node.id,
+      target: closeNodeIsSource ? node.id : closestNode.node.id,
+    };
+  }, []);
+
+  const onNodeDrag = useCallback(
+    (_, node) => {
+      const closeEdge = getClosestEdge(node);
+
+      setEdges((es) => {
+        const nextEdges = es.filter((e) => e.className !== "temp");
+
+        if (
+          closeEdge &&
+          !nextEdges.find(
+            (ne) =>
+              ne.source === closeEdge.source && ne.target === closeEdge.target
+          )
+        ) {
+          closeEdge.className = "temp";
+          nextEdges.push(closeEdge);
+        }
+
+        return nextEdges;
+      });
+    },
+    [getClosestEdge, setEdges]
+  );
+
+  const onNodeDragStop = useCallback(
+    (_, node) => {
+      const closeEdge = getClosestEdge(node);
+
+      setEdges((es) => {
+        const nextEdges = es.filter((e) => e.className !== "temp");
+
+        if (
+          closeEdge &&
+          !nextEdges.find(
+            (ne) =>
+              ne.source === closeEdge.source && ne.target === closeEdge.target
+          )
+        ) {
+          nextEdges.push(closeEdge);
+        }
+
+        return nextEdges;
+      });
+    },
+    [getClosestEdge]
+  );
 
   return (
     <div className="p-6 bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen">
@@ -88,7 +201,7 @@ const SchedulerComponent = () => {
         {tasks.map((task, index) => (
           <div
             key={index}
-            className="p-4 mb-4 bg-white shadow-lg rounded-lg flex gap-4 animate-fade-in"
+            className="p-4 mb-4 bg-white shadow-lg rounded-lg flex gap-4"
           >
             <input
               type="text"
@@ -133,7 +246,6 @@ const SchedulerComponent = () => {
         onClick={fetchSchedule}
         className="w-full p-4 bg-green-600 text-white font-bold rounded-lg shadow-lg hover:bg-green-700 transition mb-6 flex justify-center items-center"
       >
-        <ChartBarIcon className="h-6 w-6 mr-2" />
         Optimize Schedule
       </button>
 
@@ -147,13 +259,20 @@ const SchedulerComponent = () => {
       {schedule.length > 0 && (
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4 text-gray-800 flex items-center">
-            <ChartBarIcon className="h-6 w-6 text-green-500 mr-2" />
-            Optimized Schedule as Graph
+            Schedule Visualization
           </h2>
-          <div style={{ width: "100%", height: "500px" }} className="bg-white shadow-lg rounded-lg">
-            <ReactFlow elements={generateGraphElements()} fitView>
+          <div style={{ width: "100%", height: "500px" }}>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onNodeDrag={onNodeDrag}
+              onNodeDragStop={onNodeDragStop}
+              style={{ backgroundColor: "#F7F9FB" }}
+              fitView
+            >
               <Background />
-              <Controls />
             </ReactFlow>
           </div>
         </div>
@@ -162,4 +281,8 @@ const SchedulerComponent = () => {
   );
 };
 
-export default SchedulerComponent;
+export default () => (
+  <ReactFlowProvider>
+    <SchedulerComponent />
+  </ReactFlowProvider>
+);
