@@ -1,104 +1,175 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from "react";
+import axios from "axios";
+import {
+  ReactFlow,
+  useNodesState,
+  useEdgesState,
+  Background,
+  ReactFlowProvider,
+} from "reactflow";
 
-const TheNewsAPIComponent = () => {
-  const [query, setQuery] = useState(''); // User's search input
-  const [articles, setArticles] = useState([]); // Fetched news articles
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+import "reactflow/dist/style.css";
 
-  const apiToken = 'KsD2pN4o8dtSVjbwd8uj2HHcgJF2UOc9FlrDq7un';
-  const baseUrl = 'https://api.thenewsapi.com/v1/news/all';
+const SchedulerComponent = () => {
+  const [tasks, setTasks] = useState([
+    { id: 1, name: "Prepare Project Report", priority: 3, duration: 4, deadline: 12 },
+    { id: 2, name: "Team Meeting", priority: 5, duration: 2, deadline: 8 },
+    { id: 3, name: "Code Review", priority: 4, duration: 3, deadline: 10 },
+    { id: 4, name: "Client Presentation", priority: 2, duration: 6, deadline: 15 },
+    { id: 5, name: "System Backup", priority: 1, duration: 5, deadline: 20 },
+    { id: 6, name: "Develop Feature X", priority: 4, duration: 3, deadline: 9 },
+  ]);
+  const [maxTime, setMaxTime] = useState("");
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [error, setError] = useState("");
 
-  const fetchNews = async () => {
-    if (!query.trim()) {
-      alert('Please enter a search term');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
+  const fetchSchedule = useCallback(async () => {
+    console.log("Here is the task before we optimize the process",tasks) ; 
+    console.log("MaxTime",maxTime) ; 
     try {
-      const response = await fetch(`${baseUrl}?api_token=${apiToken}&search=${query}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch articles');
-      }
-      const data = await response.json();
-      setArticles(data.data || []);
+      setError("");
+      const response = await axios.post(
+        "https://python-api-three-weld.vercel.app/schedule",
+        {
+          tasks,
+          max_time: parseInt(maxTime),
+        }
+      );
+      const schedule = response.data;
+      createGraph(schedule);
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      setError(err.response?.data?.detail || "An error occurred.");
     }
-  };
+  }, [tasks, maxTime]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    fetchNews();
-  };
+  const createGraph = useCallback((schedule) => {
+    // Create nodes for tasks
+    const newNodes = schedule.map((task, index) => ({
+      id: `task-${task.name}`,
+      data: { label: `${tasks.find((t) => t.id === task.task_id).name}` },
+      position: { x: index * 200, y: 100 },
+    }));
+
+    // Create edges based on task dependencies (simple sequential flow)
+    const newEdges = schedule.slice(1).map((task, index) => ({
+      id: `edge-${index}`,
+      source: `task-${schedule[index].task_id}`,
+      target: `task-${task.task_id}`,
+      animated: true,
+      label: `Duration: ${task.end_time - task.start_time}h`,
+    }));
+
+    setNodes(newNodes);
+    setEdges(newEdges);
+  }, [tasks, setNodes, setEdges]);
 
   return (
-    <div className="p-6 justify-center items-center min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6">The News API Search</h1>
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-6">Task Flow Visualization</h1>
 
-      {/* Search Form */}
-      <form onSubmit={handleSearch} className="text-center mb-4">
+      <div className="mb-6">
+        <label className="block text-lg font-semibold mb-2">Maximum Time (hours)</label>
         <input
-          type="text"
-          placeholder="Search news (e.g., usd | gbp)"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="px-4 py-2 border rounded w-2/3 sm:w-1/2"
+          type="number"
+          className="w-full p-3 border border-gray-300 rounded-lg shadow focus:ring focus:ring-blue-300"
+          value={maxTime}
+          onChange={(e) => setMaxTime(e.target.value)}
+          placeholder="Enter maximum time"
         />
-        <button
-          type="submit"
-          className="ml-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
-      </form>
+      </div>
 
-      {/* Loading and Error States */}
-      {loading && <p className="text-center text-blue-500">Loading...</p>}
-      {error && <p className="text-center text-red-500">Error: {error}</p>}
-
-      {/* News Articles */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {articles.map((article, index) => (
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold mb-4">Tasks</h2>
+        {tasks.map((task, index) => (
           <div
             key={index}
-            className="primary-color rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+            className="p-4 mb-2 bg-white shadow rounded-md flex gap-4 items-center"
           >
-            {/* Image Section */}
-            <div className="h-40 overflow-hidden">
-              <img
-                src={article.image_url || 'https://via.placeholder.com/400'}
-                alt={article.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Content Section */}
-            <div className="p-4 flex flex-col justify-between h-48">
-              <h2 className="text-lg font-semibold text-white mb-2 truncate">
-                {article.title}
-              </h2>
-              <p className="text-sm text-gray-500 mb-4 line-clamp-3">
-                {article.description || 'No description available.'}
-              </p>
-              <a
-                href={article.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto text-blue-500 hover:underline"
-              >
-                Read More
-              </a>
-            </div>
+            <input
+              type="text"
+              className="p-2 border border-gray-300 rounded-md w-1/3"
+              placeholder="Task Name"
+              value={task.name}
+              onChange={(e) =>
+                setTasks((prevTasks) =>
+                  prevTasks.map((t, i) => (i === index ? { ...t, name: e.target.value } : t))
+                )
+              }
+            />
+            <input
+              type="number"
+              className="p-2 border border-gray-300 rounded-md w-1/5"
+              placeholder="Priority"
+              value={task.priority}
+              onChange={(e) =>
+                setTasks((prevTasks) =>
+                  prevTasks.map((t, i) =>
+                    i === index ? { ...t, priority: Number(e.target.value) } : t
+                  )
+                )
+              }
+            />
+            <input
+              type="number"
+              className="p-2 border border-gray-300 rounded-md w-1/5"
+              placeholder="Duration"
+              value={task.duration}
+              onChange={(e) =>
+                setTasks((prevTasks) =>
+                  prevTasks.map((t, i) =>
+                    i === index ? { ...t, duration: Number(e.target.value) } : t
+                  )
+                )
+              }
+            />
+            <input
+              type="number"
+              className="p-2 border border-gray-300 rounded-md w-1/5"
+              placeholder="Deadline"
+              value={task.deadline}
+              onChange={(e) =>
+                setTasks((prevTasks) =>
+                  prevTasks.map((t, i) =>
+                    i === index ? { ...t, deadline: Number(e.target.value) } : t
+                  )
+                )
+              }
+            />
           </div>
         ))}
+      </div>
+
+      <button
+        onClick={fetchSchedule}
+        className="p-4 bg-green-500 text-white font-bold rounded-lg shadow-lg hover:bg-green-600 transition w-full mb-6"
+      >
+        Generate Optimized Task Flow
+      </button>
+
+      {error && (
+        <div className="mt-4 text-red-600 font-bold bg-red-100 p-3 rounded-lg shadow-md">
+          {error}
+        </div>
+      )}
+
+      <div style={{ width: "100%", height: "500px" }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          fitView
+        >
+          <Background />
+        </ReactFlow>
       </div>
     </div>
   );
 };
 
-export default TheNewsAPIComponent;
+export default () => (
+  <ReactFlowProvider>
+    <SchedulerComponent />
+  </ReactFlowProvider>
+);
