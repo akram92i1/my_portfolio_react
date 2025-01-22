@@ -119,7 +119,7 @@ function App() {
               <Skills />
               <About />
               <SchedulerComponent />
-              <TheNewsAPIComponent />
+              {/* <TheNewsAPIComponent /> */}
               <Work />
             </>
           }

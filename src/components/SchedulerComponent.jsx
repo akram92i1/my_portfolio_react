@@ -7,9 +7,8 @@ import {
   Background,
   ReactFlowProvider,
 } from "reactflow";
+
 import "reactflow/dist/style.css";
-import { AiOutlinePlus, AiOutlineClockCircle, AiOutlineWarning } from "react-icons/ai";
-import { FaTasks } from "react-icons/fa";
 
 const SchedulerComponent = () => {
   const [tasks, setTasks] = useState([]);
@@ -19,20 +18,21 @@ const SchedulerComponent = () => {
   const [error, setError] = useState("");
 
   const addTask = () => {
-    setTasks([
-      ...tasks,
-      { id: tasks.length + 1, name: "", priority: 0, duration: 0, deadline: 0 },
+    setTasks((prevTasks) => [
+      ...prevTasks,
+      { id: prevTasks.length + 1, name: "", priority: 0, duration: 0, deadline: 0 },
     ]);
   };
 
   const updateTask = (index, key, value) => {
-    const updatedTasks = tasks.map((task, i) =>
-      i === index ? { ...task, [key]: value } : task
+    setTasks((prevTasks) =>
+      prevTasks.map((task, i) => (i === index ? { ...task, [key]: value } : task))
     );
-    setTasks(updatedTasks);
   };
 
   const fetchSchedule = useCallback(async () => {
+    console.log("Tasks before optimization:", tasks);
+    console.log("MaxTime:", maxTime);
     try {
       setError("");
       const response = await axios.post(
@@ -50,49 +50,46 @@ const SchedulerComponent = () => {
   }, [tasks, maxTime]);
 
   const createGraph = useCallback((schedule) => {
-    // Create nodes for tasks
-    const newNodes = schedule.map((task, index) => ({
-      id: `task-${task.task_id}`,
-      data: { label: `Task ${task.task_id}` },
-      position: { x: index * 200, y: 100 },
-      style: {
-        background: "#f0f9ff",
-        border: "2px solid #3b82f6",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        padding: "10px",
-        textAlign: "center",
-      },
-    }));
+    const newNodes = schedule.map((task, index) => {
+      const taskDetails = tasks.find((t) => t.id === task.task_id);
 
-    // Create edges based on task dependencies (simple sequential flow)
+      if (!taskDetails) {
+        console.error(`Task with ID ${task.task_id} not found in local tasks list.`);
+        return null;
+      }
+
+      return {
+        id: `task-${task.task_id}-${taskDetails.name.replace(/\s+/g, '-')}`,
+        data: { label: `${taskDetails.name}` },
+        position: { x: index * 200, y: 100 },
+      };
+    }).filter(Boolean);
+
     const newEdges = schedule.slice(1).map((task, index) => ({
       id: `edge-${index}`,
-      source: `task-${schedule[index].task_id}`,
-      target: `task-${task.task_id}`,
+      source: `task-${schedule[index].task_id}-${tasks
+        .find((t) => t.id === schedule[index].task_id)
+        .name.replace(/\s+/g, '-')}`,
+      target: `task-${task.task_id}-${tasks
+        .find((t) => t.id === task.task_id)
+        .name.replace(/\s+/g, '-')}`,
       animated: true,
       label: `Duration: ${task.end_time - task.start_time}h`,
-      style: { stroke: "#4ade80" },
-      labelStyle: { fontSize: 12, fill: "#22c55e" },
     }));
 
     setNodes(newNodes);
     setEdges(newEdges);
-  }, [setNodes, setEdges]);
+  }, [tasks, setNodes, setEdges]);
 
   return (
-    <div className="p-6 bg-gradient-to-b from-gray-100 to-gray-300 min-h-screen">
-      <h1 className="text-4xl font-bold text-center mb-6 flex items-center justify-center gap-2">
-        <FaTasks /> Task Flow Visualization
-      </h1>
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-4xl font-bold text-center mb-6">Task Flow Visualization</h1>
 
       <div className="mb-6">
-        <label className="block text-lg font-semibold mb-2 flex items-center gap-2">
-          <AiOutlineClockCircle /> Maximum Time (hours)
-        </label>
+        <label className="block text-lg font-semibold mb-2">Maximum Time (hours)</label>
         <input
           type="number"
-          className="w-full p-3 border border-gray-300 rounded-lg shadow focus:ring focus:ring-blue-300 transition-transform duration-300 transform hover:scale-80"
+          className="w-full p-3 border border-gray-300 rounded-lg shadow focus:ring focus:ring-blue-300"
           value={maxTime}
           onChange={(e) => setMaxTime(e.target.value)}
           placeholder="Enter maximum time"
@@ -100,13 +97,11 @@ const SchedulerComponent = () => {
       </div>
 
       <div className="mb-6">
-        <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-          <AiOutlineWarning /> Tasks
-        </h2>
+        <h2 className="text-2xl font-semibold mb-4">Tasks</h2>
         {tasks.map((task, index) => (
           <div
             key={index}
-            className="p-4 mb-2 bg-white shadow rounded-md flex gap-4 items-center transition-transform duration-300 transform hover:scale-95"
+            className="p-4 mb-2 bg-white shadow rounded-md flex gap-4 items-center"
           >
             <input
               type="text"
@@ -120,35 +115,35 @@ const SchedulerComponent = () => {
               className="p-2 border border-gray-300 rounded-md w-1/5"
               placeholder="Priority"
               value={task.priority}
-              onChange={(e) => updateTask(index, "priority", e.target.value)}
+              onChange={(e) => updateTask(index, "priority", Number(e.target.value))}
             />
             <input
               type="number"
               className="p-2 border border-gray-300 rounded-md w-1/5"
               placeholder="Duration"
               value={task.duration}
-              onChange={(e) => updateTask(index, "duration", e.target.value)}
+              onChange={(e) => updateTask(index, "duration", Number(e.target.value))}
             />
             <input
               type="number"
               className="p-2 border border-gray-300 rounded-md w-1/5"
               placeholder="Deadline"
               value={task.deadline}
-              onChange={(e) => updateTask(index, "deadline", e.target.value)}
+              onChange={(e) => updateTask(index, "deadline", Number(e.target.value))}
             />
           </div>
         ))}
         <button
           onClick={addTask}
-          className="p-3 bg-blue-600 text-white font-bold rounded-md shadow hover:bg-blue-700 transition-transform duration-300 transform hover:scale-105 w-full mt-4 flex items-center justify-center gap-2"
+          className="p-3 bg-blue-600 text-white font-bold rounded-md shadow hover:bg-blue-700 transition w-full mt-4"
         >
-          <AiOutlinePlus /> Add Task
+          Add Task
         </button>
       </div>
 
       <button
         onClick={fetchSchedule}
-        className="p-4 bg-green-500 text-white font-bold rounded-lg shadow-lg hover:bg-green-600 transition-transform duration-300 transform hover:scale-105 w-full mb-6"
+        className="p-4 bg-green-500 text-white font-bold rounded-lg shadow-lg hover:bg-green-600 transition w-full mb-6"
       >
         Generate Optimized Task Flow
       </button>

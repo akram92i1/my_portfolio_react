@@ -25,18 +25,16 @@ const SchedulerComponent = () => {
   const [error, setError] = useState("");
 
   const fetchSchedule = useCallback(async () => {
-    console.log("Here is the task before we optimize the process",tasks) ; 
-    console.log("MaxTime",maxTime) ; 
     try {
-      setError("");
-      const response = await axios.post(
-        "https://python-api-three-weld.vercel.app/schedule",
-        {
-          tasks,
-          max_time: parseInt(maxTime),
-        }
-      );
-      const schedule = response.data;
+      // setError("");
+      // const response = await axios.post(
+      //   "https://python-api-three-weld.vercelsssss.app/schedule",
+      //   {
+      //     tasks,
+      //     max_time: parseInt(maxTime),
+      //   }
+      // );
+      const schedule = tasks;
       createGraph(schedule);
     } catch (err) {
       setError(err.response?.data?.detail || "An error occurred.");
@@ -45,21 +43,28 @@ const SchedulerComponent = () => {
 
   const createGraph = useCallback((schedule) => {
     // Create nodes for tasks
-    const newNodes = schedule.map((task, index) => ({
-      id: `task-${task.name}`,
-      data: { label: `${tasks.find((t) => t.id === task.task_id).name}` },
-      position: { x: index * 200, y: 100 },
-    }));
-
-    // Create edges based on task dependencies (simple sequential flow)
+    const newNodes = schedule.map((task, index) => {
+      const taskDetails = tasks.find((t) => t.id === task.task_id);
+      if (!taskDetails) {
+        console.error(`Task with ID ${task.task_id} not found in local tasks list.`);
+        return null;
+      }
+  
+      return {
+        data: { label: `${tasks.find((t) => t.id === task.task_id).name}` }, // Use task_id for consistent IDs
+        position: { x: index * 200, y: 100 }, // Position nodes sequentially
+      };
+    }).filter(Boolean); // Remove any null values caused by missing tasks
+  
+    // Create edges based on task dependencies (sequential flow)
     const newEdges = schedule.slice(1).map((task, index) => ({
       id: `edge-${index}`,
-      source: `task-${schedule[index].task_id}`,
-      target: `task-${task.task_id}`,
+      source: `task-${schedule[index].task_id}`, // Use task_id for source
+      target: `task-${task.task_id}`, // Use task_id for target
       animated: true,
-      label: `Duration: ${task.end_time - task.start_time}h`,
+      label: `Duration: ${task.end_time - task.start_time}h`, // Use duration from schedule
     }));
-
+  
     setNodes(newNodes);
     setEdges(newEdges);
   }, [tasks, setNodes, setEdges]);
