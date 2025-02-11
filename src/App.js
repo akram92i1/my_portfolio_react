@@ -12,6 +12,7 @@ import ApiCallComponent from './components/ApiCallComponent';
 import WaifuPicsComponent from './components/WaifuPicsComponent ';
 import TheNewsAPIComponent from './components/TheNewsAPIComponent ';
 import SchedulerComponent from './components/SchedulerComponent';
+import CircleCard from './components/CircleCard';
 
 const projectList = [
   {
@@ -112,13 +113,13 @@ function App() {
       <Navbar />
       <Routes>
         <Route
-          path="/my_portfolio_react"
+          path="/"
           element={
             <>
               <Hero />
               <Skills />
               <About />
-              <SchedulerComponent />
+              <CircleCard />
               {/* <TheNewsAPIComponent /> */}
               <Work />
             </>
