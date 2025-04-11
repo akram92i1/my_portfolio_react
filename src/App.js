@@ -13,7 +13,7 @@ import WaifuPicsComponent from './components/WaifuPicsComponent ';
 import TheNewsAPIComponent from './components/TheNewsAPIComponent ';
 import SchedulerComponent from './components/SchedulerComponent';
 import CircleCard from './components/CircleCard';
-
+import ConnectedGraph from './components/ConnectedGraph';
 const projectList = [
   {
     id: 'project1',
@@ -101,7 +101,124 @@ L’équipe "Conception et Fabrication Assistées par Ordinateur" (CFAO) de la D
 
       Le projet manque de détails sur certains aspects techniques, notamment le pseudo-code de l'algorithme. Cependant, il illustre efficacement l'impact positif de la théorie des jeux dans la gestion des ressources des réseaux de capteurs.
     `,
+  },
+  {
+    id: 'project4',
+    title: 'Projet DevOps de Collecte Intelligente de Données',
+    description: `**Optimisation des chaînes agroalimentaires et proposition de plats économiques**  
+Ce projet interconnecte des technologies modernes pour collecter et analyser les prix des produits alimentaires en promotion (via les circulaires*). Son objectif est de **proposer des recettes adaptées aux promotions**, aidant les utilisateurs à réduire leurs coûts tout en limitant le gaspillage.  
+
+Un **robot logiciel (bot)** automatisé (Selenium/Docker) collecte les données, transmises à une API Spring Boot conteneurisée qui les stocke via LocalStack. L’application mobile React Native permet de visualiser les promotions en temps réel et suggère des plats équilibrés basés sur ces offres.  
+
+*Circulaire* : Catalogue promotionnel (papier ou numérique) annonçant des remises temporaires.`,
+    
+    motivation: `L’objectif est d’offrir un système complet et automatisé de surveillance des prix alimentaires en temps réel, tout en mettant en œuvre les bonnes pratiques DevOps (conteneurisation, modularité, CI/CD, partage inter-conteneurs). Le projet vise également à renforcer la transparence des prix pour les consommateurs et à fournir un outil d’analyse aux producteurs locaux.`,
+    
+    technologies: [
+      'Docker', 
+      'Selenium', 
+      'Spring Boot', 
+      'LocalStack', 
+      'React Native', 
+      'GitHub Actions'
+    ],
+    
+    hasUAVAnimation: false, // Bot automatisé, pas de drone physique
+  
+    explication: `
+      🔄 **Automatisation de la Collecte des Prix avec Selenium et Docker**
+  
+      Un conteneur Docker exécute un navigateur automatisé basé sur **Selenium** afin de récupérer régulièrement les prix affichés publiquement par les épiceries. Cette méthode simule un comportement utilisateur tout en respectant les conditions d’accès des sites web.
+  
+      🌐 **API Spring Boot et Stockage avec LocalStack**
+  
+      Les données extraites sont automatiquement transmises à une API **Spring Boot**, déployée dans un conteneur séparé. L’API stocke ensuite ces données dans une base **S3/DynamoDB** simulée grâce à **LocalStack**, ce qui permet de développer localement en imitant les services AWS.
+  
+      📱 **Visualisation via une Application Mobile React Native**
+  
+      Une application mobile **React Native** interroge l’API pour afficher les prix en temps réel. L’interface est pensée pour une navigation fluide, avec filtrage par magasin ou produit.
+  
+      ⚙️ **DevOps et Infrastructure Modulaire**
+  
+      Ce projet repose sur une architecture **DevOps** moderne :
+      - Conteneurisation complète avec **Docker**
+      - Déploiement automatisé via **GitHub Actions**
+      - Séparation claire des services (scraping, backend, base de données, frontend)
+      - Infrastructure locale simulée avec **LocalStack**
+  
+      Cette approche facilite la maintenance, le test et le déploiement du système tout en rendant le projet évolutif et prêt pour une migration vers le cloud réel (AWS) si nécessaire.
+    `,
+  },{
+    id: 'project3',
+    title: 'Système de recommandation de livres avec Neo4j et métadonnées Bibtex',
+    description: `**Recommandation de livres via une modélisation en graphe**  
+  Ce projet explore l'utilisation de bases de données orientées graphe (Neo4j) pour créer un système de recommandation de livres basé sur les métadonnées Bibtex. L'objectif est de démontrer la supériorité des modèles en graphe face aux SGBD relationnels pour exprimer des relations complexes entre auteurs, genres, et références.`,
+  
+    motivation: `Comprendre l'intérêt des bases de données orientées graphe dans les systèmes de recommandation modernes, tout en comparant leur performance et flexibilité avec les SGBD relationnels. Ce projet vise également à résoudre la surcharge d'informations littéraires en proposant des suggestions personnalisées.`,
+  
+    technologies: [
+      'Neo4j', 
+      'Cypher', 
+      'Bibtex', 
+      'Python (extraction de données)', 
+      'APIs de métadonnées'
+    ],
+  
+    hasUAVAnimation: false, // Aucun composant physique
+  
+    explication: `
+      📚 **Modélisation des données en graphe**  
+      Les métadonnées Bibtex (auteurs, éditeurs, genres) sont transformées en nœuds et relations dans Neo4j. Par exemple :  
+      - (Livre)-[ÉCRIT_PAR]->(Auteur)  
+      - (Livre)-[GENRE]->(Science-Fiction)  
+  
+      🔍 **Requêtes Cypher pour la recommandation**  
+      Exemple de requête personnalisable :  
+      \`MATCH (l:Livre)-[:GENRE]->(g)<-[:GENRE]-(reco:Livre) WHERE l.titre = "Dune" RETURN reco\`  
+  
+      ⚡ **Benchmark Neo4j vs SGBD relationnel**  
+      Mesure des temps de réponse pour :  
+      - Requêtes relationnelles complexes (JOIN multiples)  
+      - Traversée de graphe (e.g., "Livres similaires à ceux aimés par les lecteurs de X")  
+  
+      📊 **Analyse des avantages/limites**  
+      - Flexibilité du modèle graphe pour les relations imbriquées  
+      - Limites en termes de volumétrie brute vs solutions NoSQL autres  
+      
+      🎯 **Cas d'usage concret**  
+      Interface permettant aux utilisateurs de saisir :  
+      1. Un livre préféré  
+      2. Un genre/auteur  
+      3. Recevoir des recommandations basées sur les connexions du graphe  
+    `,
+  
+    questionsReponses: {
+      traitées: [
+        "Pourquoi préférer Neo4j à un SGBD relationnel pour les relations complexes ?",
+        "Comment modéliser des métadonnées Bibtex en graphe ?",
+        "Quels gains de performance sur les requêtes de recommandation ?"
+      ],
+      nonTraitées: [
+        "Architecture complète d'un système de recommandation industriel",
+        "Mécanismes de stockage low-level de Neo4j"
+      ]
+    },
+  
+    plan: [
+      "Introduction aux bases de données graphe",
+      "Extraction/transformation des données Bibtex",
+      "Modélisation Neo4j & requêtes Cypher",
+      "Benchmark vs SGBD relationnel",
+      "Démo de recommandation interactive"
+    ],
+  
+    references: [
+      "Dharmawan et al. (2017) - Book recommendation using Neo4j...",
+      "Sen et al. (2021) - Recommendation of Influenced Products...",
+      "Documentation officielle Neo4j"
+    ]
   }
+  
   
   // Add other projects similarly
 ];
@@ -110,23 +227,40 @@ L’équipe "Conception et Fabrication Assistées par Ordinateur" (CFAO) de la D
 function App() {
   return (
     <Router>
-      <Navbar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <Skills />
-              <About />
-              <CircleCard />
-              {/* <TheNewsAPIComponent /> */}
-              <Work />
-            </>
-          }
-        />
-        <Route path="/project-details/:id" element={<ProjectDescription projects={projectList} />} />
-      </Routes>
+      <div className="relative min-h-screen">
+        {/* Background Animation */}
+        <ConnectedGraph />
+
+        {/* Content Wrapper to ensure it's above the animation */}
+        <div className="relative z-10">
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                   <Hero />
+                  <div id='skills'>
+                    <Skills />
+                  </div>
+                  {/* Add IDs to match navbar links */}
+                  <div id="about">
+                    <About />
+                  </div>
+                  <div id="work">
+                    <Work />
+                  </div>
+                  
+                  {/* this will be updated  <div id='portailAPI'>
+                    <CircleCard />
+                  </div> */}
+                </>
+              }
+            />
+            <Route path="/project-details/:id" element={<ProjectDescription projects={projectList} />} />
+          </Routes>
+        </div>
+      </div>
     </Router>
   );
 }

@@ -1,3 +1,5 @@
+// SchedulerComponent_ortools.jsx
+
 import React, { useState, useCallback } from "react";
 import axios from "axios";
 import {
@@ -36,7 +38,7 @@ const SchedulerComponent = () => {
     try {
       setError("");
       const response = await axios.post(
-        "https://python-api-three-weld.vercel.app/schedule",
+        "https://testdeploymentvercel-roan.vercel.app/schedule",
         {
           tasks,
           max_time: parseInt(maxTime),
@@ -169,8 +171,10 @@ const SchedulerComponent = () => {
   );
 };
 
-export default () => (
+const SchedulerComponent_ortools = () => (
   <ReactFlowProvider>
     <SchedulerComponent />
   </ReactFlowProvider>
 );
+
+export default SchedulerComponent_ortools;

@@ -48,7 +48,7 @@ const About = () => {
   ];
 
   return (
-    <div className='text-white max-w-[1200px] mx-auto' id='about'>
+    <div className='text-white max-w-[1200px] mx-auto bg-black' id='about'>
       <div className='md:grid md:grid-cols-3 sm:py-16 gap-4'>
         {/* Left Side - Education */}
         <div className='mt-4 md:mt-0 text-left'>
