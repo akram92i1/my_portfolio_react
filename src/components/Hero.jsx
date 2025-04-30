@@ -2,43 +2,53 @@ import React, { useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import navbarlogo from '../assets/navbarlogo.png';
 import cvFile from "../assets/AkramCV.pdf";
-
+import { FaWhatsapp, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 const Hero = () => {
   const [contactModal, setContactModal] = useState(false);
 
   const ContactModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-gray-800 rounded-lg p-4 w-[15vw] h-[15vh] min-w-[300px] min-h-[200px] flex flex-col justify-center items-center relative">
-        <button 
-          onClick={() => setContactModal(false)}
-          className="absolute top-2 right-2 text-white hover:text-pink-500 text-xl"
-        >
-          &times;
-        </button>
-        
-        <h3 className="text-white text-lg mb-4">Contact rapide</h3>
-        
-        <div className="flex flex-col gap-4 w-full px-4">
-          <a
-            href="https://wa.me/+14389254652"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center transition-colors"
-          >
-            WhatsApp
-          </a>
-          
-          <a
-            href="https://www.linkedin.com/in/akram-khelili-727030191/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center transition-colors"
-          >
-            LinkedIn
-          </a>
-        </div>
-      </div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hover:backdrop-blur-sm">
+  <div className="bg-gray-800 rounded-lg p-8 w-[10vw] h-[10vh] min-w-[300px] min-h-[350px] flex flex-col justify-center items-center relative">
+    <button 
+      onClick={() => setContactModal(false)}
+      className="absolute top-2 right-2 text-white hover:text-pink-500 text-2xl"
+    >
+      &times;
+    </button>
+
+    <h3 className="text-white text-xl  mb-4">Contact Rapide</h3>
+
+    <div className="flex flex-col gap-4 w-full px-2">
+      <a
+        href="https://wa.me/+14389254652"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors"
+      >
+        <FaWhatsapp size={30} />
+        <span>WhatsApp</span>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/akram-khelili-727030191/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+      >
+        <FaLinkedin size={30} />
+        <span>LinkedIn</span>
+      </a>
+
+      <a
+        href="mailto:akramkhelili9300429@gmail.com"
+        className="flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+      >
+        <FaEnvelope size={30} />
+        <span>Gmail</span>
+      </a>
     </div>
+  </div>
+</div>
   );
 
   return (
