@@ -10,7 +10,7 @@ const ConnectedGraph = () => {
     let height = (canvas.height = window.innerHeight);
 
     const particles = [];
-    const numParticles = 100;
+    const numParticles = 200;
     const maxDistance = 150;
     const keywords = [
       { word: "AI", quote: "The future belongs to those who harness artificial intelligence." },
@@ -21,7 +21,6 @@ const ConnectedGraph = () => {
       { word: "Heuristics", quote: "Good heuristics are like good instincts: they lead to better decisions faster." },
       { word: "ML", quote: "Machine learning: turning data into insights, and insights into action." },
       { word: "Security", quote: "In cybersecurity, the strongest link is an informed user." },
-      { word: "UAV", quote: "Autonomous flight is redefining the limits of exploration." },
       { word: "Big Data", quote: "Data is the new oil, and big data is its refinery." }
     ];
 
@@ -90,9 +89,13 @@ const ConnectedGraph = () => {
       drawLines();
       requestAnimationFrame(animate);
     }
-
-    animate();
-
+    if (window.innerWidth>=1100) {
+      animate();
+    }
+    else{
+       // Optional: still clear the canvas once if needed
+       ctx.clearRect(0, 0, width, height);
+    }
     window.addEventListener("resize", () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
@@ -100,7 +103,7 @@ const ConnectedGraph = () => {
   }, []);
 
   return (
-    <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full z-[-1]" />
+    <canvas ref={canvasRef} className="fixed top-0 blur-sm left-0 w-full h-full z-[-1]" />
   );
 };
 
