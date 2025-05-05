@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.6d234a39.css",
-    "main.js": "/static/js/main.24bb4da9.js",
+    "main.css": "/static/css/main.8a945251.css",
+    "main.js": "/static/js/main.ca626920.js",
     "static/js/453.41811d64.chunk.js": "/static/js/453.41811d64.chunk.js",
     "static/media/DSC_5607.JPG": "/static/media/DSC_5607.cbeb79a878bfd6bea339.JPG",
-    "static/media/navbarlogo.png": "/static/media/navbarlogo.eff6e31136edf909450f.png",
+    "static/media/navbarlogo.png": "/static/media/navbarlogo.99ecb4d27583674144f9.png",
     "static/media/Matlab.png": "/static/media/Matlab.a5545e37b742b310f849.png",
     "static/media/Kubernetes.png": "/static/media/Kubernetes.b17478e8c42bbd354aa1.png",
     "static/media/AkramCV.pdf": "/static/media/AkramCV.706b6c7117d55d04e070.pdf",
@@ -32,14 +32,14 @@
     "static/media/grass.webp": "/static/media/grass.a1f3e554690edf03a6fb.webp",
     "static/media/Vuejs.png": "/static/media/Vuejs.07751eceb1c4e5ff4c65.png",
     "static/media/Localstack.png": "/static/media/Localstack.d1ef4f04fbff81570a07.png",
-    "static/media/MYSQL.png": "/static/media/MYSQL.917a06bb07ab3ff2a683.png",
+    "static/media/Mysql.png": "/static/media/Mysql.917a06bb07ab3ff2a683.png",
     "index.html": "/index.html",
-    "main.6d234a39.css.map": "/static/css/main.6d234a39.css.map",
-    "main.24bb4da9.js.map": "/static/js/main.24bb4da9.js.map",
+    "main.8a945251.css.map": "/static/css/main.8a945251.css.map",
+    "main.ca626920.js.map": "/static/js/main.ca626920.js.map",
     "453.41811d64.chunk.js.map": "/static/js/453.41811d64.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6d234a39.css",
-    "static/js/main.24bb4da9.js"
+    "static/css/main.8a945251.css",
+    "static/js/main.ca626920.js"
   ]
 }
