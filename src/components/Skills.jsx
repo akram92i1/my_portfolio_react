@@ -1,178 +1,89 @@
-import React from 'react'
-import javaLogo from '../assets/java.png' ; 
-import pythonLogo from '../assets/Python.png' ; 
-import VueJs from '../assets/Vuejs.png' ; 
-import CplusLogo from '../assets/Cplus.png'; 
-import SQLogo from '../assets/SQL.png' ; 
+import React from 'react';
+import javaLogo from '../assets/java.png';
+import pythonLogo from '../assets/Python.png';
+import VueJs from '../assets/Vuejs.png';
+import CplusLogo from '../assets/Cplus.png';
+import SQLogo from '../assets/SQL.png';
 import ocamLogo from '../assets/Ocaml.png';
-import matLabLogo from '../assets/Matlab.png' ;
-import DockerLogo from '../assets/Docker.png' ; 
-import AnsibleLogo from '../assets/Ansible.png' ; 
+import matLabLogo from '../assets/Matlab.png';
+import DockerLogo from '../assets/Docker.png';
+import AnsibleLogo from '../assets/Ansible.png';
 import JenkinsLogo from '../assets/Jenkins.png';
 import Kubernetes from '../assets/Kubernetes.png';
 import LocalStack from '../assets/Localstack.png';
-import Oketeto from "../assets/Okteto.png";
-import ZUULogo from "../assets/ZUUL.png";
+import Oketeto from '../assets/Okteto.png';
+import ZUULogo from '../assets/ZUUL.png';
 import AWS3Logo from '../assets/AWS3.png';
-import VagrantLogo from '../assets/Vagrant.png'
-import MysqLogo from  '../assets/MYSQL.png';
+import VagrantLogo from '../assets/Vagrant.png';
+import MysqLogo from '../assets/Mysql.png';
 import mongoDbLogo from '../assets/mongodb.png';
 import Neo4j from '../assets/Neo4j.png';
 import Reactjs from '../assets/react.png';
 import Nodejs from '../assets/nodejs.png';
-import DjangoLogo from '../assets/Django.png'
+import DjangoLogo from '../assets/Django.png';
+
+const Section = ({ title, items }) => (
+  <div className="bg-black text-gray-200 max-w-[1200px] mx-auto px-4 py-6">
+    {title === "Langages maîtrisés" && <h2 className='text-4xl animate-fade-in font-bold primary-color mb-8'>Compétences techniques</h2>}
+    <h2 className=" animate-fade-in text-2xl sm:text-3xl font-bold mb-6 border-b border-gray-700  pb-2 text-center sm:text-left">{title}</h2>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 place-items-center">
+      {items.map(({ src, label }, index) => (
+        <div key={index} className="flex flex-col items-center transition-transform transform hover:scale-105">
+          <img src={src} alt={label} className="w-16 sm:w-20 md:w-24 object-contain" />
+          <p className=" text-sm text-center">{label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 const Skills = () => {
+  const languages = [
+    { src: javaLogo, label: 'Java' },
+    { src: pythonLogo, label: 'Python' },
+    { src: CplusLogo, label: 'C++' },
+    { src: SQLogo, label: 'SQL' },
+    { src: matLabLogo, label: 'MATLAB' },
+    { src: ocamLogo, label: 'OCaml' },
+    { src: Nodejs, label: 'Node.js' },
+  ];
+
+  const titre = "compétences techniques" ; 
+
+  const devopsTools = [
+    { src: DockerLogo, label: 'Docker' },
+    { src: Kubernetes, label: 'Kubernetes' },
+    { src: AnsibleLogo, label: 'Ansible' },
+    { src: JenkinsLogo, label: 'Jenkins' },
+    { src: LocalStack, label: 'LocalStack' },
+    { src: Oketeto, label: 'Okteto' },
+    { src: ZUULogo, label: 'ZUUL-CI' },
+    { src: AWS3Logo, label: 'AWS S3' },
+    { src: VagrantLogo, label: 'Vagrant' },
+  ];
+
+  const frameworks = [
+    { src: Reactjs, label: 'React JS' },
+    { src: VueJs, label: 'Vue.js' },
+    { src: DjangoLogo, label: 'Django' },
+  ];
+
+  const databases = [
+    { src: MysqLogo, label: 'MySQL' },
+    { src: mongoDbLogo, label: 'MongoDB' },
+    { src: Neo4j, label: 'Neo4j' },
+  ];
+
   return (
     <div>
-        <div className='border border-white border-dashed bg-black text-gray-400 max-w-[1200px] mx-auto grid grid-cols-2 gap-4 place-items-center 
-            sm:grid-cols-3 md:grid-cols-6 md:h-[150px] md:flex md:justify-between md:items-center'>
-                <h2 className='text-gray-750 text-2xl md:text-3xl font-bold m-4 '>
-                    Langages  <br /> maîtrisés
-
-                </h2>
-        
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={javaLogo} alt="" width={75} height={75} />
-                <p className='mt-2'>Java</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={pythonLogo} alt="" width={75} height={75} />
-                <p className='mt-2'>Python</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={CplusLogo} alt="" width={75} height={75} />
-                <p className='mt-2'>C++</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={SQLogo} alt="" width={75} height={75} />
-                <p className='mt-2'>SQL</p>
-            </div>
-
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={matLabLogo} alt="" width={75} height={75} />
-                <p className='mt-5'>MATLAB</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={ocamLogo} alt="" width={75} height={75} />
-                <p className='mt-2'>OCaml</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-                <img src={Nodejs} alt="" width={75} height={75} />
-                <p className='mt-2'>Nodejs</p>
-            </div>
-    
-
-        </div>
-
-        <div className='border border-white border-dashed bg-black text-gray-400 max-w-[1200px] mx-auto grid grid-cols-2 gap-4 place-items-center 
-            sm:grid-cols-3 md:grid-cols-6 md:h-[150px] md:flex md:justify-between md:items-center' >
-            <h2 className='text-gray-750 text-2xl md:text-3xl font-bold m-4 '> 
-            Outils  <br /> Devops
-            </h2>
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={DockerLogo} alt="" width={75} height={75} />
-              <p className='mt-2'>Docker</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={Kubernetes} alt="" width={75} height={75} />
-              <p className='mt-2'>Kubernetes</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={AnsibleLogo} alt="" width={75} height={75} />
-              <p className='mt-2'>Ansible</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={JenkinsLogo} alt="" width={62} height={62} />
-              <p className='mt-2'>Jenkins</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={LocalStack} alt="" width={75} height={75} />
-              <p className='mt-2'>LocalStack</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={Oketeto} alt="" width={80} height={80} />
-              <p className='mt-2'>Oketeto</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={ZUULogo} alt="" width={100} height={100} />
-              <p className='mt-2'>ZUUL-CI</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={AWS3Logo} alt="" width={100} height={100} />
-              <p className='mt-2'>AWS S3</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={VagrantLogo} alt="" width={100} height={100} />
-              <p className='mt-2'>Vagrant</p>
-            </div>
-        </div>
-
-
-
-        <div className='border border-white border-dashed bg-black text-gray-400 max-w-[1200px] mx-auto grid grid-cols-2 gap-4 place-items-center 
-            sm:grid-cols-3 md:grid-cols-6 md:h-[150px] md:flex md:justify-items-start md:items-center' >
-
-              <h2 className='text-gray-750 text-2xl md:text-3xl font-bold m-4'> 
-                    Framework<br /> WEB
-              </h2>
-              <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={Reactjs} alt="" width={100} height={100} />
-              <p className='mt-2'>React Js</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={VueJs} alt="" width={100} height={100} />
-              <p className='mt-2'>Vue.Js</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={DjangoLogo} alt="" width={100} height={100} />
-              <p className='mt-2'>django</p>
-            </div>
-        </div>
-
-        <div className='border border-white border-dashed bg-black text-gray-400 max-w-[1200px] mx-auto grid grid-cols-2 gap-4 place-items-center 
-            sm:grid-cols-3 md:grid-cols-6 md:h-[150px] md:flex md:justify-items-start md:items-center' >
-
-            <h2 className='text-gray-750 text-2xl md:text-3xl font-bold m-4 ml-1 sm:text-3xl'> 
-                        Base de  <br /> données
-              </h2>
-
-             <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={MysqLogo} alt="" width={100} height={100} />
-              <p className='mt-2'>My SQL</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={mongoDbLogo} alt="" width={100} height={100} />
-              <p className='mt-2'>mongo db</p>
-            </div>
-
-            <div className='flex flex-col items-center m-4 sm:my-0 w-[75px] md:w-[75px]'>
-            <img src={Neo4j} alt="" width={100} height={100} />
-              <p className='mt-2'>Neo4j</p>
-            </div>
-          </div>
-
-
-          
-          
+      <div className="space-y-0">
+        <Section title="Langages maîtrisés" items={languages} />
+        <Section title="Outils DevOps" items={devopsTools} />
+        <Section title="Frameworks Web" items={frameworks} />
+        <Section title="Bases de données" items={databases} />
+      </div>
     </div>
-  )
-}
-export default Skills
- 
+  );
+};
+
+export default Skills;

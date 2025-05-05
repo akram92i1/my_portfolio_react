@@ -18,7 +18,7 @@ const Work = () => {
   return (
     <section className="max-w-[1200px] mx-auto p-5 bg-black" id="work">
       <header className="pb-8">
-        <h2 className="text-4xl mb-3 font-bold primary-color">Mes travaux</h2>
+        <h2 className=" animate-fade-in text-4xl mb-3 font-bold primary-color">Mes travaux</h2>
         <p className="text-gray-500">Explorez mes récents projets et leurs détails.</p>
       </header>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">

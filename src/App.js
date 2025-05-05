@@ -240,8 +240,10 @@ function App() {
               element={
                 <>
                    <Hero />
+                   <br/>
                   <div id='skills'>
                     <Skills />
+                    <br/>
                   </div>
                   {/* Add IDs to match navbar links */}
                   <div id="about">

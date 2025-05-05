@@ -56,7 +56,7 @@ const Hero = () => {
       {contactModal && <ContactModal />}
       
       <div className='col-span-1 my-auto mx-auto w-[300px] h-auto lg:w-[400px]'>
-        <img src={navbarlogo} alt="akram image" />
+         <img className=' animate-fade-in rounded-3xl w-48 sm:w-56 lg:w-64  mx-auto mb-6' src={navbarlogo} alt="akram image" />
       </div>
       
       <div className='col-span-2 px-5 my-auto'>
